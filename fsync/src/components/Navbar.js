@@ -21,9 +21,9 @@ import { IoClose } from "react-icons/io5";
 import GlobalStates from "../utilities/GlobalStates";
 import { useContext } from "react";
 
-const Links = ["Dashboard", "About", "Brand"];
+// const Links = ["Dashboard", "About", "Brand"];
 
-const NavLink = ({ children }) => (
+const NavLink = ({ children, link }) => (
   <Link
     px={2}
     py={1}
@@ -32,15 +32,25 @@ const NavLink = ({ children }) => (
       textDecoration: "none",
       bg: useColorModeValue("gray.200", "gray.700"),
     }}
-    href={children === "Home" ? "/" : `/${children}`}
+    href={link}
   >
     {children}
   </Link>
 );
 
-function Navbar({ SignIn }) {
-  const NavContext = useContext(GlobalStates);
+const Links = ({ role }) => {
+  return (
+    <>
+      <NavLink link="/">Home</NavLink>
+      <NavLink link={role === "retail"? "/retaildash": "/branddash"}>Dashboard</NavLink>
+      <NavLink link="/About">About</NavLink>
+    </>
+  );
+};
+
+const Navbar = ({ SignIn }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const NavContext = useContext(GlobalStates);
 
   return (
     <>
@@ -62,12 +72,10 @@ function Navbar({ SignIn }) {
               spacing={4}
               display={{ base: "none", md: "flex" }}
             >
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
+              <Links role={NavContext.role} />
               {SignIn}
 
-              <Menu>
+              <Menu colorScheme="blackAlpha">
                 <MenuButton
                   as={Button}
                   rounded={"full"}
@@ -83,23 +91,24 @@ function Navbar({ SignIn }) {
                   />
                 </MenuButton>
 
-                <MenuList>
+                <MenuList color="black" >
                   <MenuItem>{NavContext.user}</MenuItem>
-                  <MenuItem>Link 2</MenuItem>
-                  <MenuDivider />
-                  <MenuItem>Link 3</MenuItem>
+                  <MenuItem>{NavContext.email}</MenuItem>
+                  {/* <MenuDivider />
+                  <MenuItem>Link 3</MenuItem> */}
                 </MenuList>
               </Menu>
             </HStack>
           </Flex>
         </Flex>
-{/* {console.log(" Nav Context", NavContext)} */}
+        {/* {console.log(" Nav Context", NavContext)} */}
         {isOpen ? (
           <Box pb={4} display={{ md: "none" }}>
             <Stack as={"nav"} spacing={4}>
-              {Links.map((link) => (
+              {/* {Links.map((link) => (
                 <NavLink key={link}>{link}</NavLink>
-              ))}
+              ))} */}
+              <Links role={NavContext.role} />
             </Stack>
           </Box>
         ) : null}
@@ -108,5 +117,5 @@ function Navbar({ SignIn }) {
       {/* <Box p={4}>Main Content Here</Box> */}
     </>
   );
-}
+};
 export default Navbar;

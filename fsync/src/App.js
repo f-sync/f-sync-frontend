@@ -43,19 +43,19 @@ const App = () => {
               />
             }
           />
+
+          {/* All Routes go here 👇 */}
           <Switch>
-          <Route path="/About">
-            <About />
-          </Route>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <RetailRoutes
-            role={Role}
-            comp={RetailDash}
-            exact path="/retaildash"
-          />
-          <BrandRoutes role={Role} comp={BrandDash} path="/branddash" />
+            <Route path="/About" component={About} />
+            <Route exact path="/" component={Home} />
+
+            <RetailRoutes
+              role={Role}
+              comp={RetailDash}
+              exact
+              path="/retaildash"
+            />
+            <BrandRoutes role={Role} comp={BrandDash} path="/branddash" />
           </Switch>
         </Router>
       </ChakraProvider>
