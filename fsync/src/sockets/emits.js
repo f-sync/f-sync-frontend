@@ -55,10 +55,21 @@ export const CreateNewCompany = (payload) => {
 }
 
 export const AddProductToRetail = (payload) => {
-    // This emit is the add a new product to a retailer's stock
+    // This emit is to add a new product to a retailer's stock
     // Payload:
         // productID
         // brandID
         // retailerID
     socket.emit("addProductinRetail", payload);
+}
+
+export const RequestProduct = (payload) => {
+    // This emit is to trigger the Twilio API to ask a company (brand or retailer) for a product
+    // Payload:
+        // productID
+        // brandID
+        // retailerID
+        // targetType : "brand" or "retail", who is being asked?
+        // requestType : "brand" or "retail", who is asking?
+    socket.emit("requestProduct", payload);
 }
