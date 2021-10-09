@@ -94,27 +94,21 @@ const Navbar = ({ SignIn }) => {
                 <MenuList color="black" >
                   <MenuItem>{NavContext.user}</MenuItem>
                   <MenuItem>{NavContext.email}</MenuItem>
-                  {/* <MenuDivider />
-                  <MenuItem>Link 3</MenuItem> */}
+                  <MenuDivider />
+                  <MenuItem>{NavContext.role}</MenuItem>
                 </MenuList>
               </Menu>
             </HStack>
           </Flex>
         </Flex>
-        {/* {console.log(" Nav Context", NavContext)} */}
         {isOpen ? (
           <Box pb={4} display={{ md: "none" }}>
             <Stack as={"nav"} spacing={4}>
-              {/* {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
-              ))} */}
               <Links role={NavContext.role} />
             </Stack>
           </Box>
         ) : null}
       </Box>
-
-      {/* <Box p={4}>Main Content Here</Box> */}
     </>
   );
 };
