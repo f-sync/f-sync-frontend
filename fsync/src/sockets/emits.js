@@ -1,4 +1,4 @@
-import { socket } from "./app.js" // Fix this import later
+import { socket } from "./app.js" // Possibly fix this import later, check events.js also
 
 export const ModifyQuantity = (payload) => {
     // This emit is to change the quantity of a specific product
