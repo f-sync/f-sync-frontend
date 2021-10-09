@@ -5,23 +5,27 @@ import About from "./pages/About";
 import BrandDash from "./pages/BrandDash";
 import Home from "./pages/Home";
 import GlobalStates from "./utilities/GlobalStates";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { GoogleLogin } from "react-google-login";
 import BrandRoutes from "./utilities/BrandRoutes";
 import RetailRoutes from "./utilities/RetailRoutes";
 import RetailDash from "./pages/RetailDash";
+import React from "react";
+import SocketProvider from "./sockets/SocketProvider";
 
 // Socket.io-client
-import { io } from "socket.io-client"
+// import { io } from "socket.io-client";
 
-// socket MUST be defined outside here as upon calling a useState, it creates a new client.
-let socket = null;
+// // socket MUST be defined outside here as upon calling a useState, it creates a new client.
+// export let socket = null;
+// const ENDPOINT = "http://localhost:5000"; // Point this to somewhere more official later
+// const ioContext = React.createContext(io(ENDPOINT));
 
 const App = () => {
   const [User, setUser] = useState("Sony");
   const [Role, setRole] = useState("retail");
   const [Email, setEmail] = useState("sonylomo1@gmail.com");
-  const [stateSocket, setSocket] = useState(null); // Socket state
+  // const [stateSocket, setSocket] = useState(null); // Socket state
 
   const responseGoogle = (response) => {
     //     profileObj:
@@ -36,48 +40,51 @@ const App = () => {
     console.log(response);
   };
 
-  useEffect(() => {
-    const ENDPOINT = "http://localhost:5000"; // Point this to somewhere more official later
+  // useEffect(() => {
 
-    // A mentor told me to do this since sometimes I would open multiple sockets, it was weird
-    if (!socket) {
-      socket = io(ENDPOINT);
-      setSocket(socket)
-    }
-  })
+  //   // A mentor told me to do this since sometimes I would open multiple sockets, it was weird
+  //   if (!socket) {
+  //     socket = io(ENDPOINT);
+  //     setSocket(socket);
+  //     console.log("Socket Check", socket);
+  //   }
+  // });
 
   return (
-    <GlobalStates.Provider value={{ user: User, role: Role, email: Email }}>
-      <ChakraProvider>
-        <Router>
-          <Navbar
-            SignIn={
-              <GoogleLogin
-                clientId="498773789332-j57idmbh2shks3ogl28qnbil78idfiq6.apps.googleusercontent.com"
-                buttonText="Login"
-                onSuccess={responseGoogle}
-                onFailure={responseGoogle}
-                cookiePolicy={"single_host_origin"}
+    <SocketProvider>
+      <GlobalStates.Provider value={{ user: User, role: Role, email: Email }}>
+        <ChakraProvider>
+          <Router>
+            <Navbar
+              SignIn={
+                <GoogleLogin
+                  clientId="498773789332-j57idmbh2shks3ogl28qnbil78idfiq6.apps.googleusercontent.com"
+                  buttonText="Login"
+                  onSuccess={responseGoogle}
+                  onFailure={responseGoogle}
+                  cookiePolicy={"single_host_origin"}
+                />
+              }
+            />
+            <Switch>
+              <Route path="/About">
+                <About />
+              </Route>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <RetailRoutes
+                role={Role}
+                comp={RetailDash}
+                exact
+                path="/retaildash"
               />
-            }
-          />
-          <Switch>
-          <Route path="/About">
-            <About />
-          </Route>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <RetailRoutes
-            role={Role}
-            comp={RetailDash}
-            exact path="/retaildash"
-          />
-          <BrandRoutes role={Role} comp={BrandDash} path="/branddash" />
-          </Switch>
-        </Router>
-      </ChakraProvider>
-    </GlobalStates.Provider>
+              <BrandRoutes role={Role} comp={BrandDash} path="/branddash" />
+            </Switch>
+          </Router>
+        </ChakraProvider>
+      </GlobalStates.Provider>
+      </SocketProvider>
   );
 };
 
