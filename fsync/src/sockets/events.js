@@ -32,4 +32,9 @@ export const socketEvents = ({ setValue }) => {
         // setValue(state => {return {...state, stateStocklist} })
     })
 
+    socket.on("debugConnection", (payload) => {
+        console.log("I was triggered by the backend. Check if payload made it through: ")
+        console.log("The message under me should say: If you can see this, you can hear me!")
+        console.log(payload);
+    })
 }
