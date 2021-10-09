@@ -5,16 +5,23 @@ import About from "./pages/About";
 import BrandDash from "./pages/BrandDash";
 import Home from "./pages/Home";
 import GlobalStates from "./utilities/GlobalStates";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { GoogleLogin } from "react-google-login";
 import BrandRoutes from "./utilities/BrandRoutes";
 import RetailRoutes from "./utilities/RetailRoutes";
 import RetailDash from "./pages/RetailDash";
 
+// Socket.io-client
+import { io } from "socket.io-client"
+
+// socket MUST be defined outside here as upon calling a useState, it creates a new client.
+let socket = null;
+
 const App = () => {
   const [User, setUser] = useState("Sony");
   const [Role, setRole] = useState("retail");
   const [Email, setEmail] = useState("sonylomo1@gmail.com");
+  const [stateSocket, setSocket] = useState(null); // Socket state
 
   const responseGoogle = (response) => {
     //     profileObj:
@@ -28,6 +35,17 @@ const App = () => {
     setEmail(response.profileObj.email);
     console.log(response);
   };
+
+  useEffect(() => {
+    const ENDPOINT = "http://localhost:5000"; // Point this to somewhere more official later
+
+    // A mentor told me to do this since sometimes I would open multiple sockets, it was weird
+    if (!socket) {
+      socket = io(ENDPOINT);
+      setSocket(socket)
+    }
+  })
+
   return (
     <GlobalStates.Provider value={{ user: User, role: Role, email: Email }}>
       <ChakraProvider>
