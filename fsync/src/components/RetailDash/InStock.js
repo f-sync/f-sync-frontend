@@ -1,38 +1,58 @@
 import {
-  Flex,
-  useColorModeValue,
-  ButtonGroup,
-  IconButton,
-  Table,
-  Thead,
-  Tr,
-  Th,
-  Td,
-  Tbody,
+    Button,
+    Flex, Table,
+    Tbody,
+    Td,
+    Th,
+    Thead,
+    Tr
 } from "@chakra-ui/react";
-import { AiFillEdit } from "react-icons/ai";
-import { BsBoxArrowUpRight, BsFillTrashFill } from "react-icons/bs";
 import React from "react";
+import { FcFeedback } from "react-icons/fc";
 
-const Dashboard = ({Role}) => {
-  const header = ["name", "created", "actions"];
+const InStock = () => {
+  const header = [
+    "Item Name",
+    "ID",
+    "Size",
+    "Color",
+    "Location Available",
+    "Action",
+  ];
   const data = [
-    { name: "Daggy", created: "7 days ago", },
-    { name: "Anubra", created: "23 hours ago" },
-    { name: "Josef", created: "A few seconds ago" },
-    { name: "Sage", created: "A few hours ago" },
+    {
+      "Item Name": "Daggy",
+      ID: 22,
+      Size: "md",
+      Color: "black",
+      "Location Available": "Singapore",
+    },
+    {
+      "Item Name": "Daggy",
+      ID: 22,
+      Size: "md",
+      Color: "black",
+      "Location Available": "Singapore",
+    },
+    {
+      "Item Name": "Daggy",
+      ID: 22,
+      Size: "md",
+      Color: "black",
+      "Location Available": "Singapore",
+    },
+    {
+      "Item Name": "Daggy",
+      ID: 22,
+      Size: "md",
+      Color: "black",
+      "Location Available": "Singapore",
+    },
   ];
   return (
-    <Flex
-      w="full"
-      bg="gray.600"
-      p={50}
-      alignItems="center"
-      justifyContent="center"
-    >
+    <Flex w="full" p={50} alignItems="center" justifyContent="center">
       <Table
         w="full"
-        bg={useColorModeValue("white", "gray.800")}
         display={{
           base: "block",
           md: "table",
@@ -100,7 +120,7 @@ const Dashboard = ({Role}) => {
                             display: "none",
                           },
                           textTransform: "uppercase",
-                          color:"black",
+                          color: "black",
                           fontSize: "xs",
                           fontWeight: "bold",
                           letterSpacing: "wider",
@@ -109,11 +129,7 @@ const Dashboard = ({Role}) => {
                       >
                         {x}
                       </Td>
-                      <Td
-                         color="black"
-                        fontSize="md"
-                        fontWeight="hairline"
-                      >
+                      <Td color="black" fontSize="md" fontWeight="hairline">
                         {token[x]}
                       </Td>
                     </React.Fragment>
@@ -129,28 +145,26 @@ const Dashboard = ({Role}) => {
                       display: "none",
                     },
                     textTransform: "uppercase",
-                    color:"black",
+                    color: "black",
                     fontSize: "xs",
                     fontWeight: "bold",
                     letterSpacing: "wider",
                     fontFamily: "heading",
                   }}
                 >
-                  Actions
+                  Action
                 </Td>
                 <Td>
-                  <ButtonGroup variant="solid" size="sm" spacing={3}>
-                    <IconButton
-                      colorScheme="blue"
-                      icon={<BsBoxArrowUpRight />}
-                    />
-                    <IconButton colorScheme="green" icon={<AiFillEdit />} />
-                    <IconButton
-                      colorScheme="red"
-                      variant="outline"
-                      icon={<BsFillTrashFill />}
-                    />
-                  </ButtonGroup>
+                  <Button
+                    variant="solid"
+                    colorScheme="blackAlpha"
+                    bg="black"
+                    size="sm"
+                    spacing={3}
+                    leftIcon={<FcFeedback />}
+                  >
+                    Request
+                  </Button>
                 </Td>
               </Tr>
             );
@@ -161,4 +175,4 @@ const Dashboard = ({Role}) => {
   );
 };
 
-export default Dashboard;
+export default InStock;
