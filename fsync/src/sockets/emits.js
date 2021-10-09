@@ -76,3 +76,7 @@ export const RequestProduct = (payload) => {
             // type: "brand" or "retail", who is asking?
     socket.emit("requestProduct", payload);
 }
+
+export const TestEmission = () => {
+    socket.emit("testEmit", "Hello backend!");
+}
