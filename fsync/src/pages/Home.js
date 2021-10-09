@@ -1,6 +1,5 @@
 
-import React, {useState} from 'react';
-import NavBar from "./NavBar";
+import {useState} from 'react';
 // import { extendTheme } from "@chakra-ui/react"
 // import { Text } from "@chakra-ui/react"
 
@@ -14,7 +13,6 @@ function Home() {
     
     return (
         <div className="App page_container">
-            <NavBar />
             <h1 className="page_title">F-sync</h1>
             <p className="title_description">Fashion-as-a-service</p>
 

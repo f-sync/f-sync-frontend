@@ -1,8 +1,6 @@
-import NavBar from "./NavBar";
 const About = () => {
     return (
         <div className="page_container">
-            <NavBar />
             <h1 className="page_title">F-sync</h1>
             <p className="title_description">Fashion-as-a-service</p>
 
