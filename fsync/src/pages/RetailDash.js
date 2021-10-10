@@ -6,6 +6,8 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
+  HStack,
+  Select
 } from "@chakra-ui/react";
 import { useContext } from "react";
 import GlobalStates from "../utilities/GlobalStates";
@@ -18,9 +20,16 @@ const RetailDash = () => {
 
   return (
     <Box>
-      <Heading pt="2%" pl="5%" textTransform="uppercase">
-        {DashContext.user}'s Portfolio
-      </Heading>
+      <HStack pt="2%" justify="space-around" >
+        <Heading textTransform="uppercase">
+          {DashContext.user}'s Portfolio
+        </Heading>
+        <Select placeholder="Choose Brand" variant="filled" width="30%" >
+          <option value="option1">Option 1</option>
+          <option value="option2">Option 2</option>
+          <option value="option3">Option 3</option>
+        </Select>
+      </HStack>
       <Tabs
         variant="soft-rounded"
         colorScheme="blackAlpha"
