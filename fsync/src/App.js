@@ -11,18 +11,8 @@ import SocketProvider from "./sockets/SocketProvider";
 import BrandRoutes from "./utilities/BrandRoutes";
 import GlobalStates from "./utilities/GlobalStates";
 import RetailRoutes from "./utilities/RetailRoutes";
-<<<<<<< HEAD
-=======
-import RetailDash from "./pages/RetailDash";
-
-// Socket.io-client
-import { io } from "socket.io-client";
 import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
-
-// socket MUST be defined outside here as upon calling a useState, it creates a new client.
-let socket = null;
->>>>>>> development
 
 const App = () => {
   const [User, setUser] = useState("Sony");
@@ -42,19 +32,6 @@ const App = () => {
     console.log(response);
   };
 
-<<<<<<< HEAD
-=======
-  useEffect(() => {
-    const ENDPOINT = "http://localhost:5000"; // Point this to somewhere more official later
-
-    // A mentor told me to do this since sometimes I would open multiple sockets, it was weird
-    if (!socket) {
-      socket = io(ENDPOINT);
-      setSocket(socket);
-    }
-  });
-
->>>>>>> development
   return (
     <SocketProvider>
       <GlobalStates.Provider value={{ user: User, role: Role, email: Email }}>
@@ -72,19 +49,12 @@ const App = () => {
               }
             />
 
-<<<<<<< HEAD
-            {/* All Routes go here 👇 */}
-            <Switch>
-              <Route path="/About" component={About} />
-              <Route exact path="/" component={Home} />
-=======
           {/* All Routes go here 👇 */}
           <Switch>
             <Route path="/About" component={About} />
             <Route exact path="/" component={Home} />
             <Route exact path="/SignUp" component={SignUp} />
             <Route exact path="/LogIn" component={LogIn} />
->>>>>>> development
 
               <RetailRoutes
                 role={Role}
