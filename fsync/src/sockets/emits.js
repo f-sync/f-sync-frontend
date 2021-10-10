@@ -85,6 +85,15 @@ export const AddRetailer = (payload) => {
     socket.emit("addRetailer", payload);
 }
 
+export const ReturnNotice = (payload) => {
+    // Emit to send a "return notice" (On twilio, it's the FSync return notice)
+    // Payload:
+        // brandName
+        // brandEmail
+        // retailName
+    socket.emit("returnNotice", payload);
+}
+
 export const TestEmission = () => {
     socket.emit("testEmit", "Hello backend!");
 }
