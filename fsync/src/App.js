@@ -11,6 +11,9 @@ import SocketProvider from "./sockets/SocketProvider";
 import BrandRoutes from "./utilities/BrandRoutes";
 import GlobalStates from "./utilities/GlobalStates";
 import RetailRoutes from "./utilities/RetailRoutes";
+import RetailDash from "./pages/RetailDash";
+import LogIn from "./pages/LogIn";
+import SignUp from "./pages/SignUp";
 
 const App = () => {
   const [User, setUser] = useState("Sony");
@@ -47,10 +50,12 @@ const App = () => {
               }
             />
 
-            {/* All Routes go here 👇 */}
-            <Switch>
-              <Route path="/About" component={About} />
-              <Route exact path="/" component={Home} />
+          {/* All Routes go here 👇 */}
+          <Switch>
+            <Route path="/About" component={About} />
+            <Route exact path="/" component={Home} />
+            <Route exact path="/SignUp" component={SignUp} />
+            <Route exact path="/LogIn" component={LogIn} />
 
               <RetailRoutes
                 role={Role}
