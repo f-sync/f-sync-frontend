@@ -1,20 +1,19 @@
 import { Input, Button } from "@chakra-ui/react"
 import React, { useState } from "react";
-import {CreateNewProduct} from '../../sockets/emits'
+import {AddRetailer} from '../../sockets/emits'
 
-const AddProduct = (props) => {
+const AddRetail = (props) => {
     const [value, setValue] = useState("");
     const handleChange = (event) => {
         setValue(event.target.value)
     }
-    const addProduct = () => {
-        // All product IDs are ints
-        // Payload:
-        // name : name of product
+    const addRetail = () => {
+    // Payload:
+        // retailID : email of Retailer
         // brandID : email of brand
-        let productName = value;
-        CreateNewProduct({
-            name: productName,
+        let retailID = value;
+        AddRetailer({
+            retailID: retailID,
             brandID: props.brandID,
         })
     }
@@ -23,19 +22,19 @@ const AddProduct = (props) => {
             <Input
             width="20%"
             variant="outline"
-            placeholder="Enter Product Name"
+            placeholder="Enter Retailer ID" //Email for now
             value={value}
             onChange={handleChange}
             /> &nbsp;&nbsp;
             <Button
             variant="outline"
             colorScheme="black"
-            onClick={addProduct}
+            onClick={addRetail}
             >
-                Create Product
+                Add Retailer
             </Button>
         </div>
     )
 }
 
-export default AddProduct
+export default AddRetail

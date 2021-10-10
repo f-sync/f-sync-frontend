@@ -26,15 +26,16 @@ const InStock = (props) => {
       
       // Ask the backend for the current retailer's inventory
       // MAKE THIS RERUN EVERY TIME YOU GO BACK TO THIS IN STOCK VIEW?
-      let payload = {
-        retailID: props.retailID,
-        brandID: props.brandID,
-        type: props.type
+      if (props.tabIndex === 0) {
+        let payload = {
+          retailID: props.retailID,
+          brandID: props.brandID,
+          type: props.type
+        }
+        // Get the inventory of the current retailer
+        GetStock(payload);
       }
-      // Get the inventory of the current retailer
-      GetStock(payload);
-      console.log("useEffect")
-  },[])
+  },[props.tabIndex])
 
   useEffect(() => {
     console.log(inventory)
