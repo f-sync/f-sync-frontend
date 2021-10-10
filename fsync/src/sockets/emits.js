@@ -20,7 +20,7 @@ export const GetAllBrands = (payload) => {
 }
 
 export const CreateNewProduct = (payload) => {
-    // This emit is to create a new product for a brand
+    // This emit is to create a new product for a brand, NOT A RETAILER. I REPEAT NOT A RETAILER
     // Payload:
         // name : name of product
         // brandID : email of brand
@@ -48,20 +48,20 @@ export const GetValidRetail = (payload) => {
 export const CreateNewCompany = (payload) => {
     // This emit is to add a company (either brand or retailer) to our database of users
     // Payload attributes:
-        // Email
-        // Name
-        // Phone number
-        // Address
-        // Type: Whether it's a brand or not, string?
+        // email : email of the company
+        // name : name of the company
+        // phoneNumber : phoneNumber of the company
+        // address : Address of the company
+        // type: Whether it's a brand or not, either "retail" or "brand"
     socket.emit("createNewcompany", payload);
 }
 
 export const AddProductToRetail = (payload) => {
-    // This emit is to add a new product to a retailer's stock
+    // This emit is to add a new product to a retailer's stock, NOT FOR A BRAND TO USE
     // Payload:
-        // productID
-        // brandID
-        // retailerID
+        // productID : id of product of a brand
+        // brandID : email of brand
+        // retailerID : email of the retailer
     socket.emit("addProductinRetail", payload);
 }
 
@@ -77,6 +77,13 @@ export const RequestProduct = (payload) => {
             // id : email
             // type: "brand" or "retail", who is asking?
     socket.emit("requestProduct", payload);
+}
+
+export const AddRetailer = (payload) => {
+    // Payload:
+        // retailID : email of Retailer
+        // brandID : email of brand
+    socket.emit("addRetailer", payload);
 }
 
 export const TestEmission = () => {

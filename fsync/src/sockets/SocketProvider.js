@@ -3,7 +3,10 @@ import { useState, useEffect } from "react";
 import initSockets from "./initSockets";
 
 const SocketProvider = ({ children }) => {
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState({
+    retailerBrandslist: [],
+    inventory: []
+  });
 
   useEffect(() => {
     initSockets({ setValue });
