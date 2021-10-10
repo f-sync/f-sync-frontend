@@ -1,5 +1,5 @@
 import { ChakraProvider } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import About from "./pages/About";
@@ -16,13 +16,29 @@ import SignUp from "./pages/SignUp";
 const App = () => {
   const [User, setUser] = useState("Sony");
   const [Role, setRole] = useState(""); //strictly "retail" or "brand"
-  const [Email, setEmail] = useState("sonylomo1@gmail.com");
-  const [BrandEmail, setBrandEmail] = useState("sonylomoBrand@gmail.com")
-  const [BrandName, setBrandName] = useState("SonyBrand")
+  const [Email, setEmail] = useState("");
+  const [BrandEmail, setBrandEmail] = useState("sonylomoBrand@gmail.com");
+  const [BrandName, setBrandName] = useState("SonyBrand");
+
+  const sessionrole = sessionStorage.key(0);
+  const sessionemail = sessionStorage[sessionrole];
+  useEffect(() => {
+    setRole(sessionrole);
+    setEmail(sessionemail);
+    console.log("Sessions",  sessionrole + "  " + sessionemail);
+  }, []);
 
   return (
     <SocketProvider>
-      <GlobalStates.Provider value={{ user: User, role: Role, email: Email, brandEmail: BrandEmail, brandName: BrandName}}>
+      <GlobalStates.Provider
+        value={{
+          user: User,
+          role: Role,
+          email: Email,
+          brandEmail: BrandEmail,
+          brandName: BrandName,
+        }}
+      >
         <ChakraProvider>
           <Router>
             <Navbar />

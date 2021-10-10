@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, RadioGroup, Stack, Radio } from "@chakra-ui/react";
 import { Link, useHistory } from "react-router-dom";
 
@@ -6,14 +6,21 @@ function LogIn() {
   const history = useHistory();
 
   const [email, setEmail] = useState("");
-  const [password, setPassowrd] = useState("");
+  const [password, setPassword] = useState("");
   const [role, setRole] = useState("retail");
+
+  useEffect(() => {
+    sessionStorage.clear();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     // direct to the required role dashboard
     history.push(role === "retail" ? "/retaildash" : "/branddash");
+
+    // session storage to store login value
+    sessionStorage.setItem(role, email);
   };
 
   return (
@@ -42,7 +49,7 @@ function LogIn() {
                 id="password"
                 name="password"
                 value={password}
-                onChange={(evt) => setPassowrd(evt.target.value)}
+                onChange={(evt) => setPassword(evt.target.value)}
               />
             </label>
           </div>
