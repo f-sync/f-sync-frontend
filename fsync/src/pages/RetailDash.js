@@ -14,7 +14,7 @@ import GlobalStates from "../utilities/GlobalStates";
 import InStock from "../components/RetailDash/InStock";
 import YourStock from "../components/RetailDash/YourStock";
 import ToOrder from "../components/RetailDash/ToOrder";
-import {GetAllBrands, GetStock, AddRetailer, CreateNewCompany, AddProductToRetail, CreateNewProduct, ModifyQuantity, GetValidRetail} from '../sockets/emits'
+import {GetAllBrands, GetStock, AddProductToRetail, ModifyQuantity, GetValidRetail} from '../sockets/emits'
 import SocketContext from '../utilities/SocketContext'
 
 const RetailDash = () => {
@@ -66,7 +66,7 @@ const RetailDash = () => {
             <InStock retailID = {DashContext.email} type = {"brand"} brandID = {DashContext.brandEmail} />
           </TabPanel>
           <TabPanel>
-            <ToOrder />
+            <ToOrder retailID = {DashContext.email} type = {"brand"} brandID = {DashContext.brandEmail}/>
           </TabPanel>
         </TabPanels>
       </Tabs>

@@ -13,7 +13,7 @@ import SocketContext from '../../utilities/SocketContext'
 import GenerateFakeInventory from "../../utilities/FakeInventory";
 import { FcFeedback } from "react-icons/fc";
 
-const InStock = (prop) => {
+const InStock = (props) => {
   const { inventory } = useContext(SocketContext);
   const [currentInventory, setCurrentInventory] = useState([])
 
@@ -25,21 +25,21 @@ const InStock = (prop) => {
       
       // Ask the backend for the current retailer's inventory
       let payload = {
-        retailID: prop.retailID,
-        brandID: prop.brandID,
-        type: prop.type
+        retailID: props.retailID,
+        brandID: props.brandID,
+        type: props.type
       }
       // Get the inventory of the current retailer
     GetStock(payload);
   },[])
 
   useEffect(() => {
-    console.log(inventory)
+    // console.log(inventory)
     setStock(inventory);
   },[inventory])
 
   function setStock(inventory) {
-    let fakeInventory = GenerateFakeInventory(inventory);
+    let fakeInventory = GenerateFakeInventory(inventory, false);
     setCurrentInventory(fakeInventory);
     // console.log(currentInventory)
   }
