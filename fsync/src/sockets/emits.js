@@ -47,11 +47,11 @@ export const GetValidRetail = (payload) => {
 export const CreateNewCompany = (payload) => {
     // This emit is to add a company (either brand or retailer) to our database of users
     // Payload attributes:
-        // Email
-        // Name
-        // Phone number
-        // Address
-        // Type: Whether it's a brand or not, string?
+         // email
+    // name
+    // phoneNumber
+    // address
+    // type: Whether it's a brand or not, "retail" or "brand"
     socket.emit("createNewcompany", payload);
 }
 

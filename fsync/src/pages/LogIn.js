@@ -1,114 +1,85 @@
-import React, { useState } from 'react'
+import { useState } from "react";
+import { Button, RadioGroup, Stack, Radio } from "@chakra-ui/react";
+import { Link, useHistory } from "react-router-dom";
 
 function LogIn() {
-    const [email, setEmail] = useState('');
-    const [password, setPassowrd] = useState('');
-    const [verifyPassword, setVerifyPassword] = useState('');
-    const [displayError, setDisplayError] = useState(false);
-    const [brand, setBrand] = useState(false)
-    const [retail, setRetail] = useState(false)
+  const history = useHistory();
 
-    const handleSubmit = (evt) => {
-        evt.preventDefault();
-        if (password === verifyPassword) {
-            setDisplayError(false)
+  const [email, setEmail] = useState("");
+  const [password, setPassowrd] = useState("");
+  const [role, setRole] = useState("retail");
 
-            const data = {
-                email: email,
-                password: password,
-                brand: brand
-            };
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-            // const data = {
-            //     email: email,
-            //     password: password,
-            //     retail: retail
-            //   };
+    // direct to the required role dashboard
+    history.push(role === "retail" ? "/retaildash" : "/branddash");
+  };
 
-            console.log('data:', data)
-            //Local Host, for example like: http://localhost:5000/api/login; andpoint 
-            fetch('server', {
-                method: 'POST',
-                credentials: 'include',
-                headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            })
-                .then(response => {
-                    // network failure, request prevented
-                    if (response.status >= 200 && response.status < 300) {
-                        return Promise.resolve(response);
-                    }
+  return (
+    <div className="App page_container">
+      <h1 className="page_title">F-sync</h1>
+      <p className="title_description">Welcome to F-Sync</p>
+      <div className="loginform">
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <div className="input-holder">
+            <label htmlFor="email">
+              Email
+              <input
+                isRequired
+                id="email"
+                name="email"
+                value={email}
+                onChange={(evt) => setEmail(evt.target.value)}
+              />
+            </label>
+          </div>
+          <div className="input-holder">
+            <label htmlFor="password">
+              Password
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={password}
+                onChange={(evt) => setPassowrd(evt.target.value)}
+              />
+            </label>
+          </div>
 
+          <RadioGroup
+            onChange={(val) => setRole(val)}
+            value={role}
+            isRequired={true}
+          >
+            <Stack direction="row">
+              <Radio value="brand" colorScheme="blackAlpha">
+                I am a Brand
+              </Radio>
+              <Radio value="retail" colorScheme="green">
+                I am a Retailer
+              </Radio>
+            </Stack>
+          </RadioGroup>
 
-                    return Promise.reject(new Error(response.statusText));
-                })
-                .then(response => response.json())
-                .then(result => {
-                    // custom error
-                })
-                .catch(error => {
-                    // common error
-                    return null;
-                });
-
-        } else {
-            setDisplayError(true)
-        }
-    };
-
-    // const toDisplay = {
-    //     display: "none"
-    // }
-
-    return (
-        <div className="App page_container">
-            {/* <div className="login" style={{marginLeft: "2rem"}}> */}
-            <h1 className="page_title">F-sync</h1>
-            <p className="title_description">Welcome to F-Sync</p>
-            <div className="loginform">
-                <form onSubmit={handleSubmit}>
-                    <div className="input-holder">
-                        <label htmlFor="email" >
-                            Email
-                            <input id="email" name="email" value={email} onChange={evt => setEmail(evt.target.value)} />
-                            {/* <button className="login" onClick = {()=>{LogIn(document.querySelector("#email_input").value)}}> what</button> */}
-                        </label>
-                    </div>
-                    <div className="input-holder">
-                        <label htmlFor="password">
-                            Password
-                            <input type="password" id="password" name="password" value={password} onChange={evt => setPassowrd(evt.target.value)} />
-                        </label>
-                    </div>
-                    <div className="input-holder">
-                        <label htmlFor="verifyPassword">
-                            Verify Password
-                            <input type="password" id="verifyPassword" name="verifyPassword" value={verifyPassword} onChange={evt => setVerifyPassword(evt.target.value)} />
-                        </label>
-                    </div>
-                    <div className={displayError ? "showDisplay" : "hideDisplay"}>
-                        <span>Password do not match.</span>
-                    </div>
-                    <div className="input-holder-checkbox">
-                        <div className="brand">
-                        <label htmlFor="brand">
-                            Brand
-                            <input type="checkbox" id="brand" name="brand" value={brand} onChange={evt => setBrand(evt.target.value)} />
-                        </label>
-                        </div>
-                        <div className="retail">
-                            <label htmlFor="retain">
-                                Retail
-                                <input type="checkbox" id="retail" name="retail" value={retail} onChange={evt => setRetail(evt.target.value)} />
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <button type="submit" >Sign Up</button>
-                </form>
-            </div>
-        </div>
-    )
+          <Button color="white" size="lg" bg="black" type="submit">
+            Log In
+          </Button>
+          <br />
+          <Link
+            to="/SignUp"
+            style={{ textDecoration: "underline", color: "blue" }}
+          >
+            Don't have an account?
+          </Link>
+          <br />
+          <Link to="/" style={{ textDecoration: "underline", color: "blue" }}>
+            Forgot password?
+          </Link>
+        </form>
+      </div>
+    </div>
+  );
 }
 
-export default LogIn
+export default LogIn;
