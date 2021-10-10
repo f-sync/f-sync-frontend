@@ -10,8 +10,36 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { IoIosRedo } from "react-icons/io";
+import { useContext, useEffect } from 'react'
+import {GetAllBrands, GetStock, AddRetailer, CreateNewCompany, AddProductToRetail, CreateNewProduct, ModifyQuantity, GetValidRetail} from '../../sockets/emits'
+import SocketContext from '../../utilities/SocketContext'
 
-const YourStock = () => {
+const YourStock = (prop) => {
+  const { inventory } = useContext(SocketContext);
+
+  // TODO: When the quantity changes, emit the new quantity: ModifyQuantity
+      // Payload object:
+        // productID : id of product to modify
+        // brandID : email of brand
+        // email: retailer email
+        // newQuantity: new quantity
+
+  useEffect(() => {
+      // Payload:
+      // retailID: email of retailer
+      // brandID: email of brand
+      // type: "retail" or "brand"
+      
+      // Ask the backend for the current retailer's inventory
+      let payload = {
+        retailID: prop.retailID,
+        brandID: prop.brandID,
+        type: prop.type
+      }
+      // Get 
+    GetStock(payload);
+  },[])
+
   const header = [
     "Item Name",
     "ID",
@@ -20,6 +48,7 @@ const YourStock = () => {
     "Units Available",
     "Action",
   ];
+
   const data = [
     {
       "Item Name": "Daggy",

@@ -22,7 +22,7 @@ const RetailDash = () => {
     <Box>
       <HStack pt="2%" justify="space-around" >
         <Heading textTransform="uppercase">
-          {DashContext.user}'s Portfolio
+          {DashContext.brandName}'s Portfolio
         </Heading>
         <Select placeholder="Choose Brand" variant="filled" width="30%" >
           <option value="option1">Option 1</option>
@@ -45,7 +45,7 @@ const RetailDash = () => {
 
         <TabPanels>
           <TabPanel>
-            <YourStock />
+            <YourStock retailID = {DashContext.email} type = {DashContext.role} brandID = {DashContext.brandEmail}/>
           </TabPanel>
           <TabPanel>
             <InStock />

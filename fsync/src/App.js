@@ -18,6 +18,8 @@ const App = () => {
   const [User, setUser] = useState("Sony");
   const [Role, setRole] = useState("retail");
   const [Email, setEmail] = useState("sonylomo1@gmail.com");
+  const [BrandEmail, setBrandEmail] = useState("sonylomoBrand@gmail.com")
+  const [BrandName, setBrandName] = useState("SonyBrand")
 
   const responseGoogle = (response) => {
     //     profileObj:
@@ -34,7 +36,7 @@ const App = () => {
 
   return (
     <SocketProvider>
-      <GlobalStates.Provider value={{ user: User, role: Role, email: Email }}>
+      <GlobalStates.Provider value={{ user: User, role: Role, email: Email, brandEmail: BrandEmail, brandName: BrandName}}>
         <ChakraProvider>
           <Router>
             <Navbar
