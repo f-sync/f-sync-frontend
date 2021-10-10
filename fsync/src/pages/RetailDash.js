@@ -9,7 +9,7 @@ import {
   HStack,
   Select
 } from "@chakra-ui/react";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import GlobalStates from "../utilities/GlobalStates";
 import InStock from "../components/RetailDash/InStock";
 import YourStock from "../components/RetailDash/YourStock";
@@ -20,6 +20,7 @@ import SocketContext from '../utilities/SocketContext'
 const RetailDash = () => {
   const DashContext = useContext(GlobalStates);
   const { retailerBrandslist } = useContext(SocketContext);
+  const [tabIndex, setTabIndex] = useState(0)
 
   useEffect(() => {
     let payload = DashContext.email;
@@ -51,6 +52,7 @@ const RetailDash = () => {
         align="center"
         size="lg"
         pt="2%"
+        onChange={(index) => setTabIndex(index)}
       >
         <TabList>
           <Tab>YOUR STOCK</Tab>
@@ -60,13 +62,13 @@ const RetailDash = () => {
 
         <TabPanels>
           <TabPanel>
-            <YourStock retailID = {DashContext.email} type = {DashContext.role} brandID = {DashContext.brandEmail}/>
+            <YourStock retailID = {DashContext.email} type = {DashContext.role} brandID = {DashContext.brandEmail} tabIndex = {tabIndex}/>
           </TabPanel>
           <TabPanel>
-            <InStock retailID = {DashContext.email} type = {"brand"} brandID = {DashContext.brandEmail} />
+            <InStock retailID = {DashContext.email} type = {"brand"} brandID = {DashContext.brandEmail} tabIndex = {tabIndex}/>
           </TabPanel>
           <TabPanel>
-            <ToOrder retailID = {DashContext.email} type = {"brand"} brandID = {DashContext.brandEmail}/>
+            <ToOrder retailID = {DashContext.email} type = {"brand"} brandID = {DashContext.brandEmail} tabIndex = {tabIndex}/>
           </TabPanel>
         </TabPanels>
       </Tabs>

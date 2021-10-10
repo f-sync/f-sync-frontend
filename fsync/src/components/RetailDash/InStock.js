@@ -24,14 +24,16 @@ const InStock = (props) => {
       // type: "retail" or "brand"
       
       // Ask the backend for the current retailer's inventory
-      let payload = {
-        retailID: props.retailID,
-        brandID: props.brandID,
-        type: props.type
+      if (props.tabIndex === 1) {
+        let payload = {
+          retailID: props.retailID,
+          brandID: props.brandID,
+          type: props.type
+        }
+        // Get the inventory of the current retailer
+        GetStock(payload);
       }
-      // Get the inventory of the current retailer
-    GetStock(payload);
-  },[])
+  },[props.tabIndex])
 
   useEffect(() => {
     // console.log(inventory)
