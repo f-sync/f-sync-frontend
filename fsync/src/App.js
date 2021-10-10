@@ -17,10 +17,12 @@ const App = () => {
   const [User, setUser] = useState("Sony");
   const [Role, setRole] = useState(""); //strictly "retail" or "brand"
   const [Email, setEmail] = useState("sonylomo1@gmail.com");
+  const [BrandEmail, setBrandEmail] = useState("sonylomoBrand@gmail.com")
+  const [BrandName, setBrandName] = useState("SonyBrand")
 
   return (
     <SocketProvider>
-      <GlobalStates.Provider value={{ user: User, role: Role, email: Email }}>
+      <GlobalStates.Provider value={{ user: User, role: Role, email: Email, brandEmail: BrandEmail, brandName: BrandName}}>
         <ChakraProvider>
           <Router>
             <Navbar />

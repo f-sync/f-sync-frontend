@@ -9,25 +9,40 @@ import {
   HStack,
   Select
 } from "@chakra-ui/react";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import GlobalStates from "../utilities/GlobalStates";
 import InStock from "../components/RetailDash/InStock";
 import YourStock from "../components/RetailDash/YourStock";
 import ToOrder from "../components/RetailDash/ToOrder";
+import {GetAllBrands, GetStock, AddProductToRetail, ModifyQuantity, GetValidRetail} from '../sockets/emits'
+import SocketContext from '../utilities/SocketContext'
 
 const RetailDash = () => {
   const DashContext = useContext(GlobalStates);
+  const { retailerBrandslist } = useContext(SocketContext);
+
+  useEffect(() => {
+    let payload = DashContext.email;
+    GetAllBrands(payload)
+  },[])
+
 
   return (
     <Box>
       <HStack pt="2%" justify="space-around" >
         <Heading textTransform="uppercase">
-          {DashContext.user}'s Portfolio
+          {DashContext.brandName}'s Portfolio
         </Heading>
         <Select placeholder="Choose Brand" variant="filled" width="30%" >
-          <option value="option1">Option 1</option>
+          {retailerBrandslist.map((brand) => {
+            return (
+              <option value={brand.email}>{brand.email}</option>
+              // TODO: On select to trigger swapping brands
+            )
+          })}
+          {/* <option value="option1">Option 1</option>
           <option value="option2">Option 2</option>
-          <option value="option3">Option 3</option>
+          <option value="option3">Option 3</option> */}
         </Select>
       </HStack>
       <Tabs
@@ -45,13 +60,13 @@ const RetailDash = () => {
 
         <TabPanels>
           <TabPanel>
-            <YourStock />
+            <YourStock retailID = {DashContext.email} type = {DashContext.role} brandID = {DashContext.brandEmail}/>
           </TabPanel>
           <TabPanel>
-            <InStock />
+            <InStock retailID = {DashContext.email} type = {"brand"} brandID = {DashContext.brandEmail} />
           </TabPanel>
           <TabPanel>
-            <ToOrder />
+            <ToOrder retailID = {DashContext.email} type = {"brand"} brandID = {DashContext.brandEmail}/>
           </TabPanel>
         </TabPanels>
       </Tabs>
