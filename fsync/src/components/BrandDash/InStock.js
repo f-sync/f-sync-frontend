@@ -8,10 +8,45 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { GetStock } from '../../sockets/emits'
+import SocketContext from '../../utilities/SocketContext'
+import GenerateFakeInventory from "../../utilities/FakeInventory";
 import { FcFeedback } from "react-icons/fc";
 
-const InStock = () => {
+const InStock = (props) => {
+  const { inventory } = useContext(SocketContext);
+  const [currentInventory, setCurrentInventory] = useState([])
+
+  useEffect(() => {
+      // Payload:
+      // retailID: email of retailer
+      // brandID: email of brand
+      // type: "retail" or "brand"
+      
+      // Ask the backend for the current retailer's inventory
+      // MAKE THIS RERUN EVERY TIME YOU GO BACK TO THIS IN STOCK VIEW?
+      let payload = {
+        retailID: props.retailID,
+        brandID: props.brandID,
+        type: props.type
+      }
+      // Get the inventory of the current retailer
+      GetStock(payload);
+      console.log("useEffect")
+  },[])
+
+  useEffect(() => {
+    console.log(inventory)
+    setStock(inventory);
+  },[inventory])
+
+  function setStock(inventory) {
+    let fakeInventory = GenerateFakeInventory(inventory, false);
+    setCurrentInventory(fakeInventory);
+    // console.log(currentInventory)
+  }
+
   const header = [
     "Item Name",
     "ID",
@@ -20,36 +55,7 @@ const InStock = () => {
     "Location Available",
     "Action",
   ];
-  const data = [
-    {
-      "Item Name": "Daggy",
-      ID: 22,
-      Size: "md",
-      Color: "black",
-      "Location Available": "Singapore",
-    },
-    {
-      "Item Name": "Daggy",
-      ID: 22,
-      Size: "md",
-      Color: "black",
-      "Location Available": "Singapore",
-    },
-    {
-      "Item Name": "Daggy",
-      ID: 22,
-      Size: "md",
-      Color: "black",
-      "Location Available": "Singapore",
-    },
-    {
-      "Item Name": "Daggy",
-      ID: 22,
-      Size: "md",
-      Color: "black",
-      "Location Available": "Singapore",
-    },
-  ];
+  
   return (
     <Flex w="full" p={50} alignItems="center" justifyContent="center">
       <Table
@@ -92,7 +98,7 @@ const InStock = () => {
             },
           }}
         >
-          {data.map((token, tid) => {
+          {currentInventory.map((token, tid) => {
             return (
               <Tr
                 key={tid}
