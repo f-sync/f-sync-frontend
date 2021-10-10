@@ -9,7 +9,7 @@ import {
   HStack,
   Select
 } from "@chakra-ui/react";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import GlobalStates from "../utilities/GlobalStates";
 import InStock from "../components/RetailDash/InStock";
 import YourStock from "../components/RetailDash/YourStock";
@@ -21,28 +21,31 @@ const RetailDash = () => {
   const DashContext = useContext(GlobalStates);
   const { retailerBrandslist } = useContext(SocketContext);
 
+  const [BrandDisplay, setBrandDisplay] = useState("Brand")
   useEffect(() => {
     let payload = DashContext.email;
     GetAllBrands(payload)
   },[])
 
+  // GetStock
+     // Payload:
+        // retailID: email of retailer
+        // brandID: email of brand
+        // type: "retail" or "brand"
 
   return (
     <Box>
       <HStack pt="2%" justify="space-around" >
         <Heading textTransform="uppercase">
-          {DashContext.brandName}'s Portfolio
+          {BrandDisplay}'s Portfolio
         </Heading>
-        <Select placeholder="Choose Brand" variant="filled" width="30%" >
+        <Select placeholder="Choose Brand" variant="filled" width="30%" onChange={(e)=>setBrandDisplay(e.target.value)} >
           {retailerBrandslist.map((brand) => {
             return (
-              <option value={brand.email}>{brand.email}</option>
+              <option value={brand.name}>{brand.name}</option>
               // TODO: On select to trigger swapping brands
             )
           })}
-          {/* <option value="option1">Option 1</option>
-          <option value="option2">Option 2</option>
-          <option value="option3">Option 3</option> */}
         </Select>
       </HStack>
       <Tabs

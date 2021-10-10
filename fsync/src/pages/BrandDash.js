@@ -10,7 +10,7 @@ const BrandDash = () => {
     <Box>
       <HStack pt="2%" justify="space-around">
         <Heading textTransform="uppercase">
-          {DashContext.user}'s Global Inventory
+          {DashContext.brandName}'s Global Inventory
         </Heading>
         <Select placeholder="Choose Retailer" variant="filled" width="30%">
           <option value="option1">VIEW ALL</option>
