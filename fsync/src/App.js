@@ -12,7 +12,9 @@ import RetailRoutes from "./utilities/RetailRoutes";
 import RetailDash from "./pages/RetailDash";
 
 // Socket.io-client
-import { io } from "socket.io-client"
+import { io } from "socket.io-client";
+import LogIn from "./pages/LogIn";
+import SignUp from "./pages/SignUp";
 
 // socket MUST be defined outside here as upon calling a useState, it creates a new client.
 let socket = null;
@@ -42,9 +44,9 @@ const App = () => {
     // A mentor told me to do this since sometimes I would open multiple sockets, it was weird
     if (!socket) {
       socket = io(ENDPOINT);
-      setSocket(socket)
+      setSocket(socket);
     }
-  })
+  });
 
   return (
     <GlobalStates.Provider value={{ user: User, role: Role, email: Email }}>
@@ -66,6 +68,8 @@ const App = () => {
           <Switch>
             <Route path="/About" component={About} />
             <Route exact path="/" component={Home} />
+            <Route exact path="/SignUp" component={SignUp} />
+            <Route exact path="/LogIn" component={LogIn} />
 
             <RetailRoutes
               role={Role}
