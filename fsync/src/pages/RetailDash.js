@@ -14,12 +14,14 @@ import GlobalStates from "../utilities/GlobalStates";
 import InStock from "../components/RetailDash/InStock";
 import YourStock from "../components/RetailDash/YourStock";
 import ToOrder from "../components/RetailDash/ToOrder";
+import AddProduct from "../components/RetailDash/AddProduct";
 import {GetAllBrands, GetStock, AddProductToRetail, ModifyQuantity, GetValidRetail} from '../sockets/emits'
 import SocketContext from '../utilities/SocketContext'
 
 const RetailDash = () => {
   const DashContext = useContext(GlobalStates);
   const { retailerBrandslist } = useContext(SocketContext);
+  const [tabIndex, setTabIndex] = useState(0)
 
   const [BrandDisplay, setBrandDisplay] = useState("Brand")
   useEffect(() => {
@@ -54,22 +56,27 @@ const RetailDash = () => {
         align="center"
         size="lg"
         pt="2%"
+        onChange={(index) => setTabIndex(index)}
       >
         <TabList>
           <Tab>YOUR STOCK</Tab>
           <Tab>IN STOCK</Tab>
           <Tab>MADE TO ORDER</Tab>
+          <Tab>ADD PRODUCT</Tab>
         </TabList>
 
         <TabPanels>
           <TabPanel>
-            <YourStock retailID = {DashContext.email} type = {DashContext.role} brandID = {DashContext.brandEmail}/>
+            <YourStock retailID = {DashContext.email} type = {DashContext.role} brandID = {DashContext.brandEmail} tabIndex = {tabIndex}/>
           </TabPanel>
           <TabPanel>
-            <InStock retailID = {DashContext.email} type = {"brand"} brandID = {DashContext.brandEmail} />
+            <InStock retailID = {DashContext.email} type = {"brand"} brandID = {DashContext.brandEmail} tabIndex = {tabIndex}/>
           </TabPanel>
           <TabPanel>
-            <ToOrder retailID = {DashContext.email} type = {"brand"} brandID = {DashContext.brandEmail}/>
+            <ToOrder retailID = {DashContext.email} type = {"brand"} brandID = {DashContext.brandEmail} tabIndex = {tabIndex}/>
+          </TabPanel>
+          <TabPanel>
+            <AddProduct retailID = {DashContext.email} type = {DashContext.role} brandID = {DashContext.brandEmail} tabIndex = {tabIndex}/>
           </TabPanel>
         </TabPanels>
       </Tabs>

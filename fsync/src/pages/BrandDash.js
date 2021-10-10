@@ -18,7 +18,7 @@ const BrandDash = () => {
           <option value="option3">Option 3</option>
         </Select>
       </HStack>
-      <InStock />
+      <InStock retailID = {DashContext.email} brandID = {DashContext.email} type = "brand"/>
     </Box>
   );
 };
