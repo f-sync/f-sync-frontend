@@ -11,7 +11,7 @@ import {
 import React from "react";
 import { IoIosRedo } from "react-icons/io";
 import { useContext, useEffect } from 'react'
-import {GetAllBrands, GetStock, AddRetailer, CreateNewCompany, AddProductToRetail, CreateNewProduct, ModifyQuantity, GetValidRetail} from '../../sockets/emits'
+import {GetStock, ModifyQuantity} from '../../sockets/emits'
 import SocketContext from '../../utilities/SocketContext'
 
 const YourStock = (prop) => {
@@ -36,7 +36,7 @@ const YourStock = (prop) => {
         brandID: prop.brandID,
         type: prop.type
       }
-      // Get 
+      // Get the inventory of the current retailer
     GetStock(payload);
   },[])
 
