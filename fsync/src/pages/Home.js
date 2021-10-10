@@ -1,17 +1,15 @@
 
+import { useHistory} from "react-router-dom";
 import {useState, useContext} from 'react';
 import {GetAllBrands, GetStock, AddRetailer, CreateNewCompany, AddProductToRetail, CreateNewProduct, ModifyQuantity, GetValidRetail} from '../sockets/emits'
 import SocketContext from '../utilities/SocketContext'
-// import { extendTheme } from "@chakra-ui/react"
-// import { Text } from "@chakra-ui/react"
 
 
 function Home() {
-    const [email, setEmail] = useState("");
+    let history = useHistory();
     const { retailerBrandslist, inventory } = useContext(SocketContext)
 
-    function saveEmail(emailValue) {
-        setEmail(emailValue);
+  
 
         // GetAllBrands(email);
         // let Stockpayload = {
@@ -58,21 +56,20 @@ function Home() {
         // ModifyQuantity(ProductQuantityPayload)
 
         
-    }
     
     return (
         <div className="App page_container">
             <h1 className="page_title">F-sync</h1>
             <p className="title_description">Fashion-as-a-service</p>
 
-            <p className="main_text">You provide the stock, we handle the reset.</p>
-            <input id="email_input" type="text" placeholder="Your email" />
-            <button className="main_btn" onClick = {()=>{saveEmail(document.querySelector("#email_input").value);}}>Speak to our team</button>
-            <div>
+            <p className="main_text" style={{marginBottom: "5%"}}>You provide the stock, we handle the reset.</p>
+           {/* Sign up button here */}
+            <button className="main_btn" onClick = {()=>history.push("/SignUp") }>Sign Up</button>
+            {/* <div>
                 {inventory.map((product) => (
                     <div>{product.name}</div>
                 ))}
-            </div>
+            </div> */}
         </div>
     );
 }

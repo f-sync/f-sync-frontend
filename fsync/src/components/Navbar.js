@@ -21,8 +21,6 @@ import { IoClose } from "react-icons/io5";
 import GlobalStates from "../utilities/GlobalStates";
 import { useContext } from "react";
 
-// const Links = ["Dashboard", "About", "Brand"];
-
 const NavLink = ({ children, link }) => (
   <Link
     px={2}
@@ -49,12 +47,11 @@ const Links = ({ role }) => {
   );
 };
 
-const Navbar = ({ SignIn }) => {
+const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const NavContext = useContext(GlobalStates);
 
   return (
-    <>
       <Box bg={"black"} textColor={"white"} px={4}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <IconButton
@@ -74,7 +71,6 @@ const Navbar = ({ SignIn }) => {
               display={{ base: "none", md: "flex" }}
             >
               <Links role={NavContext.role} />
-              {SignIn}
 
               <Menu colorScheme="blackAlpha">
                 <MenuButton
@@ -110,7 +106,7 @@ const Navbar = ({ SignIn }) => {
           </Box>
         ) : null}
       </Box>
-    </>
+    
   );
 };
 export default Navbar;

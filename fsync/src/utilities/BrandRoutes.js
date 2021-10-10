@@ -2,7 +2,7 @@ import {
   Redirect, Route, useLocation
 } from "react-router-dom";
 
-const BrandRoutes = ({ role, Component, ...rest }) => {
+const BrandRoutes = ({ role, comp: Component, ...rest }) => {
   let location = useLocation();
 
   return (
