@@ -37,6 +37,7 @@ const RetailDash = () => {
           {retailerBrandslist.map((brand) => {
             return (
               <option value={brand.email}>{brand.email}</option>
+              // TODO: On select to trigger swapping brands
             )
           })}
           {/* <option value="option1">Option 1</option>
@@ -62,7 +63,7 @@ const RetailDash = () => {
             <YourStock retailID = {DashContext.email} type = {DashContext.role} brandID = {DashContext.brandEmail}/>
           </TabPanel>
           <TabPanel>
-            <InStock />
+            <InStock retailID = {DashContext.email} type = {"brand"} brandID = {DashContext.brandEmail} />
           </TabPanel>
           <TabPanel>
             <ToOrder />

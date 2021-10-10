@@ -10,12 +10,14 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { IoIosRedo } from "react-icons/io";
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import {GetStock, ModifyQuantity} from '../../sockets/emits'
 import SocketContext from '../../utilities/SocketContext'
+import GenerateFakeInventory from "../../utilities/FakeInventory";
 
 const YourStock = (prop) => {
   const { inventory } = useContext(SocketContext);
+  const [currentInventory, setCurrentInventory] = useState([])
 
   // TODO: When the quantity changes, emit the new quantity: ModifyQuantity
       // Payload object:
@@ -40,6 +42,17 @@ const YourStock = (prop) => {
     GetStock(payload);
   },[])
 
+  useEffect(() => {
+    console.log(inventory)
+    setStock(inventory);
+  },[inventory])
+
+  function setStock(inventory) {
+    let fakeInventory = GenerateFakeInventory(inventory);
+    setCurrentInventory(fakeInventory);
+    // console.log(currentInventory)
+  }
+
   const header = [
     "Item Name",
     "ID",
@@ -49,36 +62,36 @@ const YourStock = (prop) => {
     "Action",
   ];
 
-  const data = [
-    {
-      "Item Name": "Daggy",
-      ID: 22,
-      Size: "md",
-      Color: "black",
-      "Units Available": 10,
-    },
-    {
-      "Item Name": "Daggy",
-      ID: 22,
-      Size: "md",
-      Color: "black",
-      "Units Available": 10,
-    },
-    {
-      "Item Name": "Daggy",
-      ID: 22,
-      Size: "md",
-      Color: "black",
-      "Units Available": 10,
-    },
-    {
-      "Item Name": "Daggy",
-      ID: 22,
-      Size: "md",
-      Color: "black",
-      "Units Available": 10,
-    },
-  ];
+  // const data = [
+  //   {
+  //     "Item Name": "Daggy",
+  //     ID: 22,
+  //     Size: "md",
+  //     Color: "black",
+  //     "Units Available": 10,
+  //   },
+  //   {
+  //     "Item Name": "Daggy",
+  //     ID: 22,
+  //     Size: "md",
+  //     Color: "black",
+  //     "Units Available": 10,
+  //   },
+  //   {
+  //     "Item Name": "Daggy",
+  //     ID: 22,
+  //     Size: "md",
+  //     Color: "black",
+  //     "Units Available": 10,
+  //   },
+  //   {
+  //     "Item Name": "Daggy",
+  //     ID: 22,
+  //     Size: "md",
+  //     Color: "black",
+  //     "Units Available": 10,
+  //   },
+  // ];
   return (
     <Flex w="full" p={50} alignItems="center" justifyContent="center">
       <Table
@@ -121,7 +134,7 @@ const YourStock = (prop) => {
             },
           }}
         >
-          {data.map((token, tid) => {
+          {currentInventory.map((token, tid) => {
             return (
               <Tr
                 key={tid}
