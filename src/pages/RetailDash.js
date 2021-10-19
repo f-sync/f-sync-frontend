@@ -42,9 +42,9 @@ const RetailDash = () => {
           {BrandDisplay}'s Portfolio
         </Heading>
         <Select placeholder="Choose Brand" variant="filled" width="30%" onChange={(e)=>setBrandDisplay(e.target.value)} >
-          {retailerBrandslist.map((brand) => {
+          {retailerBrandslist.map((brand, index) => {
             return (
-              <option value={brand.name}>{brand.name}</option>
+              <option value={brand.name} key={index}>{brand.name}</option>
               // TODO: On select to trigger swapping brands
             )
           })}

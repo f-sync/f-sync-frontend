@@ -12,10 +12,13 @@ import GlobalStates from "./utilities/GlobalStates";
 // import RetailRoutes from "./utilities/RetailRoutes";
 import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
+import Validate from "./pages/Validate";
+// import NewHome from "./pages/newHome";
+import NotFound from "./pages/NotFound";
 
 const App = () => {
   const [User, setUser] = useState("Sony");
-  const [Role, setRole] = useState(""); //strictly "retail" or "brand"
+  const [Role, setRole] = useState("retail"); //strictly "retail" or "brand"
   const [Email, setEmail] = useState("");
   const [BrandEmail, setBrandEmail] = useState("sonylomoBrand@gmail.com");
   const [BrandName, setBrandName] = useState("SonyBrand");
@@ -25,7 +28,7 @@ const App = () => {
   useEffect(() => {
     setRole(sessionrole);
     setEmail(sessionemail);
-    console.log("Sessions",  sessionrole + "  " + sessionemail);
+    console.log("Sessions", sessionrole + "  " + sessionemail);
   }, []);
 
   return (
@@ -49,8 +52,10 @@ const App = () => {
               <Route exact path="/" component={Home} />
               <Route exact path="/SignUp" component={SignUp} />
               <Route exact path="/LogIn" component={LogIn} />
-              <Route path="/retaildash" component={RetailDash} />
-              <Route path="/branddash" component={BrandDash} />
+              <Route path="/dashboard/retail" component={RetailDash} />
+              <Route path="/dashboard/brand" component={BrandDash} />
+              <Route path="/auth" component={Validate} />
+              <Route path="*" component={NotFound}/>
 
               {/* <RetailRoutes
                 role={Role}

@@ -20,6 +20,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
 import GlobalStates from "../utilities/GlobalStates";
 import { useContext } from "react";
+import WhiteLogo from '../assets/Fsync_white.png'
 
 const NavLink = ({ children, link }) => (
   <Link
@@ -62,7 +63,7 @@ const Navbar = () => {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={"center"}>
-            <Image objectFit="cover" src="Fsync_white.png" alt="F.Sync" />
+            <Image w='200px' h='200px' src={WhiteLogo} alt="F.Sync"  />
           </HStack>
           <Flex alignItems={"center"}>
             <HStack
