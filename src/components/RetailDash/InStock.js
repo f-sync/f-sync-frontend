@@ -1,44 +1,46 @@
 import {
-    Button,
-    Flex, Table,
-    Tbody,
-    Td,
-    Th,
-    Thead,
-    Tr
+  Button, Editable,
+  EditableInput,
+  EditablePreview, Flex,
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr
 } from "@chakra-ui/react";
 import React, { useContext, useEffect, useState } from "react";
-import {GetStock} from '../../sockets/emits'
-import SocketContext from '../../utilities/SocketContext'
-import GenerateFakeInventory from "../../utilities/FakeInventory";
 import { FcFeedback } from "react-icons/fc";
+import { GetStock } from "../../sockets/emits";
+import GenerateFakeInventory from "../../utilities/FakeInventory";
+import SocketContext from "../../utilities/SocketContext";
 
 const InStock = (props) => {
   const { inventory } = useContext(SocketContext);
-  const [currentInventory, setCurrentInventory] = useState([])
+  const [currentInventory, setCurrentInventory] = useState([]);
 
   useEffect(() => {
-      // Payload:
-      // retailID: email of retailer
-      // brandID: email of brand
-      // type: "retail" or "brand"
-      
-      // Ask the backend for the current retailer's inventory
-      if (props.tabIndex === 1) {
-        let payload = {
-          retailID: props.retailID,
-          brandID: props.brandID,
-          type: props.type
-        }
-        // Get the inventory of the current retailer
-        GetStock(payload);
-      }
-  },[props.tabIndex])
+    // Payload:
+    // retailID: email of retailer
+    // brandID: email of brand
+    // type: "retail" or "brand"
+
+    // Ask the backend for the current retailer's inventory
+    if (props.tabIndex === 1) {
+      let payload = {
+        retailID: props.retailID,
+        brandID: props.brandID,
+        type: props.type,
+      };
+      // Get the inventory of the current retailer
+      GetStock(payload);
+    }
+  }, [props.tabIndex]);
 
   useEffect(() => {
     // console.log(inventory)
     setStock(inventory);
-  },[inventory])
+  }, [inventory]);
 
   function setStock(inventory) {
     let fakeInventory = GenerateFakeInventory(inventory, false);
@@ -142,7 +144,36 @@ const InStock = (props) => {
                 }}
               >
                 {Object.keys(token).map((x) => {
-                  return (
+                  return x === "quantity" ? (
+                    // Location Available should be changeable from the frontend
+                    <React.Fragment key={`${tid}${x}`}>
+                      <Td
+                        display={{
+                          base: "table-cell",
+                          md: "none",
+                        }}
+                        sx={{
+                          "@media print": {
+                            display: "none",
+                          },
+                          textTransform: "uppercase",
+                          color: "black",
+                          fontSize: "xs",
+                          fontWeight: "bold",
+                          letterSpacing: "wider",
+                          fontFamily: "heading",
+                        }}
+                      >
+                        {x}
+                      </Td>
+                      <Td color="black" fontSize="md" fontWeight="hairline">
+                        <Editable defaultValue={token[x]}>
+                          <EditablePreview />
+                          <EditableInput />
+                        </Editable>
+                      </Td>
+                    </React.Fragment>
+                  ) : (
                     <React.Fragment key={`${tid}${x}`}>
                       <Td
                         display={{

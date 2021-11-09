@@ -17,7 +17,7 @@ function LogIn() {
     e.preventDefault();
 
     // direct to the required role dashboard
-    history.push(role === "retail" ? "/retaildash" : "/branddash");
+    history.push(role === "retail" ? "/dashboard/retail" : "/dashboard/brand");
 
     // session storage to store login value
     sessionStorage.setItem(role, email);

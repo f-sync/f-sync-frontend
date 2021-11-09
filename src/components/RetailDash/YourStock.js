@@ -7,6 +7,9 @@ import {
   Th,
   Thead,
   Tr,
+  Editable,
+  EditableInput,
+  EditablePreview,
 } from "@chakra-ui/react";
 import React from "react";
 import { IoIosRedo } from "react-icons/io";
@@ -153,32 +156,64 @@ const YourStock = (props) => {
                 }}
               >
                 {Object.keys(token).map((x) => {
-                  return (
-                    <React.Fragment key={`${tid}${x}`}>
-                      <Td
-                        display={{
-                          base: "table-cell",
-                          md: "none",
-                        }}
-                        sx={{
-                          "@media print": {
-                            display: "none",
-                          },
-                          textTransform: "uppercase",
-                          color: "black",
-                          fontSize: "xs",
-                          fontWeight: "bold",
-                          letterSpacing: "wider",
-                          fontFamily: "heading",
-                        }}
-                      >
-                        {x}
-                      </Td>
-                      <Td color="black" fontSize="md" fontWeight="hairline">
-                        {token[x]}
-                      </Td>
-                    </React.Fragment>
-                  );
+                return x === "quantity" ? (
+                  // Units Available should be changeable from the frontend
+                  <React.Fragment key={`${tid}${x}`}>
+                    <Td
+                      display={{
+                        base: "table-cell",
+                        md: "none",
+                      }}
+                      sx={{
+                        "@media print": {
+                          display: "none",
+                        },
+                        textTransform: "uppercase",
+                        color: "black",
+                        fontSize: "xs",
+                        fontWeight: "bold",
+                        letterSpacing: "wider",
+                        fontFamily: "heading",
+                      }}
+                    >
+                      {console.log("🧕🧕", x)}
+                      {x}
+                    </Td>
+                    <Td color="black" fontSize="md" fontWeight="hairline">
+                      <Editable defaultValue="--Enter Available Units--">
+                        <EditablePreview />
+                        <EditableInput />
+                      </Editable>
+                    </Td>
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment key={`${tid}${x}`}>
+                    <Td
+                      display={{
+                        base: "table-cell",
+                        md: "none",
+                      }}
+                      sx={{
+                        "@media print": {
+                          display: "none",
+                        },
+                        textTransform: "uppercase",
+                        color: "black",
+                        fontSize: "xs",
+                        fontWeight: "bold",
+                        letterSpacing: "wider",
+                        fontFamily: "heading",
+                      }}
+                    >
+                      {console.log("🤩", token)}
+
+                      {x}
+                    </Td>
+                    <Td color="black" fontSize="md" fontWeight="hairline">
+                      {token[x]}
+                    </Td>
+                  </React.Fragment>
+                );
                 })}
                 <Td
                   display={{
