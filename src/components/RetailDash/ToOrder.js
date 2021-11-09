@@ -43,11 +43,15 @@ const ToOrder = (props) => {
     setStock(inventory);
   }, [inventory]);
 
-  function setStock(inventory) {
+  const handlePurchase = () => {
+    console.log("Purchase Made");
+  };
+  
+  const setStock = (inventory) => {
     let fakeInventory = GenerateFakeInventory(inventory, false);
     setCurrentInventory(fakeInventory);
     // console.log(currentInventory)
-  }
+  };
 
   const header = ["Item Name", "ID", "Size", "Color", "Units", "Action"];
   // const data = [
@@ -198,6 +202,7 @@ const ToOrder = (props) => {
                     size="sm"
                     spacing={3}
                     leftIcon={<HiCurrencyDollar />}
+                    onClick={() => handlePurchase()}
                   >
                     Buy
                   </Button>

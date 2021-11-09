@@ -1,13 +1,15 @@
 import {
-  Button, Editable,
+  Button,
+  Editable,
   EditableInput,
-  EditablePreview, Flex,
+  EditablePreview,
+  Flex,
   Table,
   Tbody,
   Td,
   Th,
   Thead,
-  Tr
+  Tr,
 } from "@chakra-ui/react";
 import React, { useContext, useEffect, useState } from "react";
 import { FcFeedback } from "react-icons/fc";
@@ -43,11 +45,15 @@ const InStock = (props) => {
     setStock(inventory);
   }, [inventory]);
 
-  function setStock(inventory) {
+  const handleRequest = () => {
+    console.log("Request Made");
+  };
+
+  const setStock = (inventory) => {
     let fakeInventory = GenerateFakeInventory(inventory, false);
     setCurrentInventory(fakeInventory);
     // console.log(currentInventory)
-  }
+  };
 
   const header = [
     "Item Name",
@@ -201,6 +207,7 @@ const InStock = (props) => {
                     size="sm"
                     spacing={3}
                     leftIcon={<FcFeedback />}
+                    onClick={() => handleRequest()}
                   >
                     Request
                   </Button>
