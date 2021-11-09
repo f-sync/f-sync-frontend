@@ -41,7 +41,7 @@ const Links = ({ role }) => {
   return (
     <>
       <NavLink link="/">Home</NavLink>
-      <NavLink link={role === "retail"? "/retaildash": "/branddash"}>Dashboard</NavLink>
+      <NavLink link={role === "retail"? "/dashboard/retail": "/dashboard/brand"}>Dashboard</NavLink>
       <NavLink link="/About">About</NavLink>
       <NavLink link="/LogIn">Log In</NavLink>
     </>
