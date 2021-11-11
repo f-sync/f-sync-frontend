@@ -1,15 +1,15 @@
 import {
-    Button,
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    ModalOverlay
+  Button,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
 } from "@chakra-ui/react";
 
-const CheckEmail = ({isopen, onclose}) => {
+const CheckEmail = ({ isopen, onclose }) => {
   return (
     <>
       <Modal isOpen={isopen} onClose={onclose}>
@@ -20,7 +20,15 @@ const CheckEmail = ({isopen, onclose}) => {
           <ModalBody>Please check your email for the login URL</ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onclose}>
+            <Button
+              bg={"black"}
+              color={"white"}
+              _hover={{
+                bg: "grey",
+              }}
+              mr={3}
+              onClick={onclose}
+            >
               Close
             </Button>
           </ModalFooter>

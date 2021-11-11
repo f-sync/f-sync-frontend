@@ -1,14 +1,24 @@
-import { useState, useEffect } from "react";
-import { Button, RadioGroup, Stack, Radio } from "@chakra-ui/react";
-import { Link, useHistory } from "react-router-dom";
-import axios from "axios";
 import { useDisclosure } from "@chakra-ui/hooks";
-import CheckEmail from "./CheckEmail";
+import {
+  Button,
+  Flex,
+  FormControl,
+  FormLabel,
+  Heading,
+  Input,
+  Radio,
+  RadioGroup,
+  Stack,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import CheckEmail from "../components/CheckEmail";
 
 const Backend_URl = process.env.BACKEND_URl;
 
 const LogIn = () => {
-  const history = useHistory();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [email, setEmail] = useState("");
@@ -20,6 +30,7 @@ const LogIn = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    onOpen();
 
     // POST request to http://localhost:5000/login with email input value
     axios
@@ -39,63 +50,72 @@ const LogIn = () => {
   };
 
   return (
-    <div className="App page_container">
-      <h1 className="page_title">F-sync</h1>
-      <p className="title_description">Welcome to F-Sync</p>
-      <div className="loginform">
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <div className="input-holder">
-            <label htmlFor="email">
-              Email
-              <input
-                isRequired
-                id="email"
-                name="email"
-                value={email}
-                onChange={(evt) => setEmail(evt.target.value)}
-              />
-            </label>
-          </div>
-
-          <RadioGroup
-            onChange={(val) => setRole(val)}
-            value={role}
-            isRequired={true}
-          >
-            <Stack direction="row">
-              <Radio value="brand" colorScheme="blackAlpha">
-                I am a Brand
-              </Radio>
-              <Radio value="retail" colorScheme="green">
-                I am a Retailer
-              </Radio>
-            </Stack>
-          </RadioGroup>
-
+    <Flex
+      minH={"100vh"}
+      align={"center"}
+      justify={"center"}
+      bg={useColorModeValue("gray.50", "gray.800")}
+    >
+      <Stack
+        spacing={4}
+        w={"full"}
+        maxW={"md"}
+        bg={useColorModeValue("white", "gray.700")}
+        rounded={"xl"}
+        boxShadow={"lg"}
+        p={6}
+        my={12}
+      >
+        <Heading lineHeight={1.1} fontSize={{ base: "2xl", md: "3xl" }}>
+          Welcome Back!!
+        </Heading>
+        <FormControl id="email" isRequired>
+          <FormLabel>Email address</FormLabel>
+          <Input
+            placeholder="your-email@example.com"
+            _placeholder={{ color: "gray.500" }}
+            type="email"
+            id="email"
+            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </FormControl>
+        <RadioGroup
+          onChange={(val) => setRole(val)}
+          value={role}
+          isRequired={true}
+        >
+          <Stack direction="row" spacing={6}>
+            <Radio value="brand" colorScheme="blackAlpha">
+              I am a Brand
+            </Radio>
+            <Radio value="retail" colorScheme="blackAlpha">
+              I am a Retailer
+            </Radio>
+          </Stack>
+        </RadioGroup>
+        <Stack spacing={6}>
           <Button
-            color="white"
-            size="lg"
-            bg="black"
-            type="submit"
-            onClick={onOpen}
+            bg={"black"}
+            color={"white"}
+            _hover={{
+              bg: "grey",
+            }}
+            onClick={(e) => handleSubmit(e)}
           >
             Log In
           </Button>
-          <br />
           <Link
             to="/SignUp"
             style={{ textDecoration: "underline", color: "blue" }}
           >
             Don't have an account?
           </Link>
-          <br />
-          <Link to="/" style={{ textDecoration: "underline", color: "blue" }}>
-            Forgot password?
-          </Link>
-        </form>
-      </div>
+        </Stack>
+      </Stack>
       <CheckEmail isopen={isOpen} onclose={onClose} />
-    </div>
+    </Flex>
   );
 };
 

@@ -23,14 +23,14 @@ const Validate = () => {
 
     // POST request to http://localhost:5000/authorize with token and id from URL
     axios
-      .post(`${Backend_URl}/authorize`, {
+      .post(`${Backend_URl}/auth`, {
         token: Token,
         id: ID,
       })
       .then((response) => {
         console.log(response);
         sessionStorage.setItem(JSON.stringify(response));
-        
+
         // direct to the required role dashboard
         history.push(
           role === "retail" ? "/dashboard/retail" : "/dashboard/brand"

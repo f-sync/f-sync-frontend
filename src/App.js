@@ -16,6 +16,7 @@ import Validate from "./pages/Validate";
 // import NewHome from "./pages/newHome";
 import NotFound from "./pages/NotFound";
 import jwt from "jsonwebtoken";
+import DataTable from "./components/table";
 
 const Success_key = process.env.JWT_SECRET_KEY;
 
@@ -71,8 +72,10 @@ const App = () => {
               <Route exact path="/LogIn" component={LogIn} />
               <Route path="/dashboard/retail" component={RetailDash} />
               <Route path="/dashboard/brand" component={BrandDash} />
+              <Route path="/table" component={DataTable} />
               <Route path="/auth" component={Validate} />
               <Route path="*" component={NotFound} />
+
 
               {/* <RetailRoutes
                 role={Role}

@@ -1,37 +1,35 @@
+import { useDisclosure } from "@chakra-ui/hooks";
 import {
   Button,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   Radio,
   RadioGroup,
   Stack,
+  FormLabel,
+  Heading,
+  Flex,
+  useColorModeValue,
+  FormControl,
+  Input,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import CheckEmail from "../components/CheckEmail";
 import { CreateNewCompany } from "../sockets/emits";
-import { useDisclosure } from "@chakra-ui/hooks";
-import CheckEmail from "./CheckEmail";
 
 const Backend_URl = process.env.BACKEND_URl;
 
 const SignUp = () => {
-  const history = useHistory();
-
   const [companyName, setCompanyName] = useState("");
   const [companyAddress, setCompanyAddress] = useState("");
   const [companyEmail, setCompanyEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState("retail");
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    onOpen();
 
     axios
       .post(`${Backend_URl}/signup`, {
@@ -65,90 +63,104 @@ const SignUp = () => {
   };
 
   return (
-    <div className="App page_container">
-      <h1 className="page_title">F-sync</h1>
-      <div className="signupform">
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <div className="companyname-holder input-holder">
-            <label htmlFor="companyName">
-              Company Name
-              <input
-                type="text"
-                name="companyName"
-                id="companyName"
-                value={companyName}
-                onChange={(evt) => setCompanyName(evt.target.value)}
-              />
-            </label>
-          </div>
-          <div className="companysddress-holder input-holder">
-            <label htmlFor="companyAddress">
-              Company Address
-              <input
-                type="text"
-                name="companyAddress"
-                id="companyAddress"
-                value={companyAddress}
-                onChange={(evt) => setCompanyAddress(evt.target.value)}
-              />
-            </label>
-          </div>
-          <div className="companyemail-holder input-holder">
-            <label htmlFor="companyEmail">
-              Company Email
-              <input
-                type="text"
-                name="companyEmail"
-                id="companyEmail"
-                value={companyEmail}
-                onChange={(evt) => setCompanyEmail(evt.target.value)}
-              />
-            </label>
-          </div>
-          <div className="phonenumber-holder input-holder">
-            <label htmlFor="phoneNumber">
-              Phone Number
-              <input
-                type="text"
-                name="phoneNumber"
-                id="phoneNumber"
-                value={phoneNumber}
-                onChange={(evt) => setPhoneNumber(evt.target.value)}
-              />
-            </label>
-          </div>
-
-          <RadioGroup onChange={(val) => setRole(val)} value={role}>
-            <Stack direction="row">
-              <Radio value="brand" colorScheme="blackAlpha">
-                I am a Brand
-              </Radio>
-              <Radio value="retail" colorScheme="green">
-                I am a Retailer
-              </Radio>
-            </Stack>
-          </RadioGroup>
-
+    <Flex
+      minH={"100vh"}
+      align={"center"}
+      justify={"center"}
+      bg={useColorModeValue("gray.50", "gray.800")}
+    >
+      <Stack
+        spacing={4}
+        w={"full"}
+        maxW={"md"}
+        bg={useColorModeValue("white", "gray.700")}
+        rounded={"xl"}
+        boxShadow={"lg"}
+        p={6}
+        my={12}
+      >
+        <Heading lineHeight={1.1} fontSize={{ base: "2xl", md: "3xl" }}>
+          Let's Sign You Up!
+        </Heading>
+        <FormControl id="company_name" isRequired>
+          <FormLabel>Company Name</FormLabel>
+          <Input
+            placeholder="Company Name"
+            _placeholder={{ color: "gray.500" }}
+            type="text"
+            id="company_name"
+            name="company_name"
+            value={companyName}
+            onChange={(e) => setCompanyName(e.target.value)}
+          />
+        </FormControl>
+        <FormControl id="company_address" isRequired>
+          <FormLabel>Company Address</FormLabel>
+          <Input
+            placeholder="47 WallStreet, NYC"
+            _placeholder={{ color: "gray.500" }}
+            type="text"
+            id="company_address"
+            name="company_address"
+            value={companyAddress}
+            onChange={(e) => setCompanyAddress(e.target.value)}
+          />
+        </FormControl>
+        <FormControl id="company_email" isRequired>
+          <FormLabel>Company Email</FormLabel>
+          <Input
+            placeholder="company_email@example.com"
+            _placeholder={{ color: "gray.500" }}
+            type="email"
+            id="company_email"
+            name="company_email"
+            value={companyEmail}
+            onChange={(e) => setCompanyEmail(e.target.value)}
+          />
+        </FormControl>
+        <FormControl id="company_contact" isRequired>
+          <FormLabel>Phone Number</FormLabel>
+          <Input
+            placeholder="+254 000 345 6870"
+            _placeholder={{ color: "gray.500" }}
+            type="telephone"
+            id="company_contact"
+            name="company_contact"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+          />
+        </FormControl>
+        <RadioGroup onChange={(val) => setRole(val)} value={role}>
+          <Stack direction="row" spacing={6}>
+            <Radio value="brand" colorScheme="blackAlpha">
+              I am a Brand
+            </Radio>
+            <Radio value="retail" colorScheme="blackAlpha">
+              I am a Retailer
+            </Radio>
+          </Stack>
+        </RadioGroup>
+        <Stack spacing={6}>
           <Button
-            color="white"
-            size="lg"
-            bg="black"
-            type="submit"
-            onClick={onOpen}
+            bg={"black"}
+            color={"white"}
+            _hover={{
+              bg: "grey",
+            }}
+            onClick={(e) => handleSubmit(e)}
           >
             Sign Up
           </Button>
-          <br />
           <Link
             to="/LogIn"
             style={{ textDecoration: "underline", color: "blue" }}
           >
             Already have an account?
           </Link>
-        </form>
-      </div>
+        </Stack>
+      </Stack>
       <CheckEmail isopen={isOpen} onclose={onClose} />
-    </div>
+    </Flex>
   );
 };
 
