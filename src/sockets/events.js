@@ -4,12 +4,16 @@ import { socket } from "../sockets/initSockets";
 export const socketEvents = ({ setValue }) => {
   // I'll learn createContext and make these contexts later, probably?
 
+  socket.on('authenticated', () => {
+    // Events only for authenticated clients
+  });
+
   socket.on("yourBrands", (retailerBrandslist) => {
     // This event gives the client a list of brand objects with the attributes:
     // name : name of the brand
     // email : email of the brand (to be used as the unique ID in the database)
     console.log(retailerBrandslist)
-    setValue(state => {return {...state, retailerBrandslist } });
+    setValue(state => { return { ...state, retailerBrandslist } });
   });
 
   socket.on("updateStock", (inventory) => {
@@ -18,7 +22,7 @@ export const socketEvents = ({ setValue }) => {
     // name
     // id
     // quantity
-    setValue(state => {return {...state, inventory} })
+    setValue(state => { return { ...state, inventory } })
   });
 
   socket.on("yourRetailers", (retailerList) => {
