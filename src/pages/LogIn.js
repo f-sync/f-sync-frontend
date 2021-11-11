@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { Button, RadioGroup, Stack, Radio } from "@chakra-ui/react";
 import { Link, useHistory } from "react-router-dom";
+import axios from "axios";
 
-function LogIn() {
+const Backend_URl = process.env.BACKEND_URl;
+
+const LogIn = () => {
   const history = useHistory();
 
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [role, setRole] = useState("retail");
 
   useEffect(() => {
@@ -16,11 +18,22 @@ function LogIn() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // direct to the required role dashboard
-    history.push(role === "retail" ? "/dashboard/retail" : "/dashboard/brand");
+    // POST request to http://localhost:5000/login with email input value
+    axios
+      .post(`${Backend_URl}/login`, {
+        email: email,
+        type: role
+      })
+      .then((response) => {
+        console.log(response);
+        
+        // session storage to store login value
+        sessionStorage.setItem(role, email);
 
-    // session storage to store login value
-    sessionStorage.setItem(role, email);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -38,18 +51,6 @@ function LogIn() {
                 name="email"
                 value={email}
                 onChange={(evt) => setEmail(evt.target.value)}
-              />
-            </label>
-          </div>
-          <div className="input-holder">
-            <label htmlFor="password">
-              Password
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={password}
-                onChange={(evt) => setPassword(evt.target.value)}
               />
             </label>
           </div>
@@ -87,6 +88,6 @@ function LogIn() {
       </div>
     </div>
   );
-}
+};
 
 export default LogIn;

@@ -15,6 +15,9 @@ import SignUp from "./pages/SignUp";
 import Validate from "./pages/Validate";
 // import NewHome from "./pages/newHome";
 import NotFound from "./pages/NotFound";
+import jwt from "jsonwebtoken";
+
+const Success_key = process.env.JWT_SECRET_KEY;
 
 const App = () => {
   const [User, setUser] = useState("Sony");
@@ -25,10 +28,24 @@ const App = () => {
 
   const sessionrole = sessionStorage.key(0);
   const sessionemail = sessionStorage[sessionrole];
+  const sessiontoken = sessionStorage.key(2);
+
+  const verifyToken = (jwtToken) => {
+    try {
+      let verify = jwt.verify(jwtToken, Success_key);
+      return verify;
+    } catch (error) {
+      console.error(error.message);
+      return false;
+    }
+  };
+
   useEffect(() => {
     setRole(sessionrole);
     setEmail(sessionemail);
     console.log("Sessions", sessionrole + "  " + sessionemail);
+
+    verifyToken(sessiontoken);
   }, []);
 
   return (
@@ -55,7 +72,7 @@ const App = () => {
               <Route path="/dashboard/retail" component={RetailDash} />
               <Route path="/dashboard/brand" component={BrandDash} />
               <Route path="/auth" component={Validate} />
-              <Route path="*" component={NotFound}/>
+              <Route path="*" component={NotFound} />
 
               {/* <RetailRoutes
                 role={Role}

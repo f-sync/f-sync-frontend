@@ -1,38 +1,86 @@
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Radio,
+  RadioGroup,
+  Stack,
+} from "@chakra-ui/react";
+import axios from "axios";
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { Button, RadioGroup, Stack, Radio } from "@chakra-ui/react";
 import { CreateNewCompany } from "../sockets/emits";
+import { useDisclosure } from "@chakra-ui/hooks";
+const Backend_URl = process.env.BACKEND_URl;
 
-function SignUp() {
+const SignUp = () => {
   const history = useHistory();
 
   const [companyName, setCompanyName] = useState("");
   const [companyAddress, setCompanyAddress] = useState("");
   const [companyEmail, setCompanyEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const CheckEmail = () => {
+    return (
+      <>
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>You've Got Mail!</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>Please check your email for the login URL</ModalBody>
+
+            <ModalFooter>
+              <Button colorScheme="blue" mr={3} onClick={onClose}>
+                Close
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      </>
+    );
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Payload attributes:
-    // email
-    // name
-    // phoneNumber
-    // address
-    // type: Whether it's a brand or not, "retail" or "brand"
+    axios
+      .post(`${Backend_URl}/signup`, {
+        email: companyEmail,
+        name: companyName,
+        phoneNumber: phoneNumber,
+        address: companyAddress,
+        type: role,
+      })
+      .then((response) => {
+        console.log(response);
 
-    CreateNewCompany({
-      email: companyEmail,
-      name: companyName,
-      phoneNumber: phoneNumber,
-      address: companyAddress,
-      type: role,
-    });
+        // Payload attributes:
+        // email
+        // name
+        // phoneNumber
+        // address
+        // type: Whether it's a brand or not, "retail" or "brand"
 
-    // push to the required role dashboard
-    history.push(role === "retail" ? "/retaildash" : "/branddash");
+        CreateNewCompany({
+          email: companyEmail,
+          name: companyName,
+          phoneNumber: phoneNumber,
+          address: companyAddress,
+          type: role,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -88,18 +136,6 @@ function SignUp() {
               />
             </label>
           </div>
-          <div className="password-holder input-holder">
-            <label htmlFor="password">
-              Password
-              <input
-                type="password"
-                name="password"
-                id="password"
-                value={password}
-                onChange={(evt) => setPassword(evt.target.value)}
-              />
-            </label>
-          </div>
 
           <RadioGroup onChange={(val) => setRole(val)} value={role}>
             <Stack direction="row">
@@ -112,7 +148,13 @@ function SignUp() {
             </Stack>
           </RadioGroup>
 
-          <Button color="white" size="lg" bg="black" type="submit">
+          <Button
+            color="white"
+            size="lg"
+            bg="black"
+            type="submit"
+            onClick={onOpen}
+          >
             Sign Up
           </Button>
           <br />
@@ -124,8 +166,9 @@ function SignUp() {
           </Link>
         </form>
       </div>
+      {CheckEmail()}
     </div>
   );
-}
+};
 
 export default SignUp;
