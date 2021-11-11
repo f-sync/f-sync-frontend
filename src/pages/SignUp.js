@@ -16,6 +16,8 @@ import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { CreateNewCompany } from "../sockets/emits";
 import { useDisclosure } from "@chakra-ui/hooks";
+import CheckEmail from "./CheckEmail";
+
 const Backend_URl = process.env.BACKEND_URl;
 
 const SignUp = () => {
@@ -27,27 +29,6 @@ const SignUp = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [role, setRole] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const CheckEmail = () => {
-    return (
-      <>
-        <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>You've Got Mail!</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>Please check your email for the login URL</ModalBody>
-
-            <ModalFooter>
-              <Button colorScheme="blue" mr={3} onClick={onClose}>
-                Close
-              </Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      </>
-    );
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -166,7 +147,7 @@ const SignUp = () => {
           </Link>
         </form>
       </div>
-      {CheckEmail()}
+      <CheckEmail isopen={isOpen} onclose={onClose} />
     </div>
   );
 };

@@ -2,11 +2,14 @@ import { useState, useEffect } from "react";
 import { Button, RadioGroup, Stack, Radio } from "@chakra-ui/react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
+import { useDisclosure } from "@chakra-ui/hooks";
+import CheckEmail from "./CheckEmail";
 
 const Backend_URl = process.env.BACKEND_URl;
 
 const LogIn = () => {
   const history = useHistory();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("retail");
@@ -22,14 +25,13 @@ const LogIn = () => {
     axios
       .post(`${Backend_URl}/login`, {
         email: email,
-        type: role
+        type: role,
       })
       .then((response) => {
         console.log(response);
-        
+
         // session storage to store login value
         sessionStorage.setItem(role, email);
-
       })
       .catch((error) => {
         console.log(error);
@@ -70,7 +72,13 @@ const LogIn = () => {
             </Stack>
           </RadioGroup>
 
-          <Button color="white" size="lg" bg="black" type="submit">
+          <Button
+            color="white"
+            size="lg"
+            bg="black"
+            type="submit"
+            onClick={onOpen}
+          >
             Log In
           </Button>
           <br />
@@ -86,6 +94,7 @@ const LogIn = () => {
           </Link>
         </form>
       </div>
+      <CheckEmail isopen={isOpen} onclose={onClose} />
     </div>
   );
 };
