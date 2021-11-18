@@ -3,7 +3,7 @@ import { useLocation, useHistory } from "react-router";
 import GlobalStates from "../utilities/GlobalStates";
 import axios from "axios";
 
-const Backend_URl = process.env.BACKEND_URl;
+const Backend_URl = process.env.REACT_APP_BACKEND_URl;
 const role = sessionStorage.getItem("role");
 
 const Validate = () => {
@@ -18,18 +18,22 @@ const Validate = () => {
   let query = new URLSearchParams(location.search);
 
   useEffect(() => {
-    setToken(query.get("token"));
-    setID(query.get("id"));
+    // setToken(query.get("token"));
+    // setID(query.get("id"));
+    console.log("location url", location)
+console.log("token frontend", query.get("token"))
+console.log("id frontend", query.get("id"))
 
-    // POST request to http://localhost:5000/authorize with token and id from URL
+
+    // POST request to http://localhost:5000/auth with token and id from URL
     axios
-      .post(`${Backend_URl}/auth`, {
-        token: Token,
-        id: ID,
+      .post(`https://f-sync-backend.dulanvee.repl.co/auth`, {
+        token: query.get("token"),
+        id: query.get("id"),
       })
       .then((response) => {
         console.log(response);
-        sessionStorage.setItem(JSON.stringify(response));
+        sessionStorage.setItem("jwt",JSON.stringify(response.data));
 
         // direct to the required role dashboard
         history.push(

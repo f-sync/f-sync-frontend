@@ -17,7 +17,7 @@ import { Link, useHistory } from "react-router-dom";
 import CheckEmail from "../components/CheckEmail";
 import { CreateNewCompany } from "../sockets/emits";
 
-const Backend_URl = process.env.BACKEND_URl;
+const Backend_URl = process.env.REACT_APP_BACKEND_URl;
 
 const SignUp = () => {
   const [companyName, setCompanyName] = useState("");
@@ -32,7 +32,7 @@ const SignUp = () => {
     onOpen();
 
     axios
-      .post(`${Backend_URl}/signup`, {
+      .post(`https://f-sync-backend.dulanvee.repl.co/signup`, {
         email: companyEmail,
         name: companyName,
         phoneNumber: phoneNumber,
@@ -58,7 +58,7 @@ const SignUp = () => {
         });
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.message);
       });
   };
 

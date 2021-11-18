@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CheckEmail from "../components/CheckEmail";
 
-const Backend_URl = process.env.BACKEND_URl;
+const Backend_URl = process.env.REACT_APP_BACKEND_URl;
 
 const LogIn = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -34,7 +34,7 @@ const LogIn = () => {
 
     // POST request to http://localhost:5000/login with email input value
     axios
-      .post(`${Backend_URl}/login`, {
+      .post(`https://f-sync-backend.dulanvee.repl.co/login`, {
         email: email,
         type: role,
       })

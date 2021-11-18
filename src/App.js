@@ -18,7 +18,7 @@ import NotFound from "./pages/NotFound";
 import jwt from "jsonwebtoken";
 import DataTable from "./components/table";
 
-const Success_key = process.env.JWT_SECRET_KEY;
+const Success_key = process.env.REACT_APP_JWT_SECRET_KEY;
 
 const App = () => {
   const [User, setUser] = useState("Sony");
@@ -74,7 +74,7 @@ const App = () => {
               <Route path="/dashboard/brand" component={BrandDash} />
               <Route path="/table" component={DataTable} />
               <Route path="/auth" component={Validate} />
-              <Route path="*" component={NotFound} />
+              <Route exact path="*" component={NotFound} />
 
 
               {/* <RetailRoutes
