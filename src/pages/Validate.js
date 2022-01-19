@@ -21,8 +21,8 @@ const Validate = () => {
     // setToken(query.get("token"));
     // setID(query.get("id"));
     console.log("location url", location)
-console.log("token frontend", query.get("token"))
-console.log("id frontend", query.get("id"))
+    console.log("token frontend", query.get("token"))
+    console.log("id frontend", query.get("id"))
 
 
     // POST request to http://localhost:5000/auth with token and id from URL
@@ -39,6 +39,7 @@ console.log("id frontend", query.get("id"))
         history.push(
           role === "retail" ? "/dashboard/retail" : "/dashboard/brand"
         );
+        window.location.reload();
       })
       .catch((error) => {
         console.log(error);
