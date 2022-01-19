@@ -34,15 +34,13 @@ const LogIn = () => {
 
     // POST request to http://localhost:5000/login with email input value
     axios
-      .post(`https://f-sync-backend.dulanvee.repl.co/login`, {
+      .post(`${Backend_URl}/login`, {
         email: email,
         type: role,
       })
       .then((response) => {
-        console.log(response);
-
-        // session storage to store login value
-        sessionStorage.setItem(role, email);
+        console.log("Login res",response);
+        // {user: 'NeoBrands', role: 'brand', email: 'sonylomo2@gmail.com', brandEmail: 'sonylomoBrand@gmail.com', brandName: 'SonyBrand'}
       })
       .catch((error) => {
         console.log(error);
@@ -81,20 +79,7 @@ const LogIn = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
         </FormControl>
-        <RadioGroup
-          onChange={(val) => setRole(val)}
-          value={role}
-          isRequired={true}
-        >
-          <Stack direction="row" spacing={6}>
-            <Radio value="brand" colorScheme="blackAlpha">
-              I am a Brand
-            </Radio>
-            <Radio value="retail" colorScheme="blackAlpha">
-              I am a Retailer
-            </Radio>
-          </Stack>
-        </RadioGroup>
+       
         <Stack spacing={6}>
           <Button
             bg={"black"}

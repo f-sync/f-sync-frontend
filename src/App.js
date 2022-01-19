@@ -44,9 +44,11 @@ const App = () => {
   useEffect(() => {
 
     // Get JWT from sessionStorage
-    const JWT = sessionStorage.getItem("jwt").replaceAll("\"", "");
+    const JWT = JSON.parse(sessionStorage.getItem("jwt"))
+    console.log("jwt", JWT)
     // Decode the JWT
     const decodedJWT = verifyToken(JWT);
+
     console.log(decodedJWT)
 
     // Set email, name, and brand into global provider

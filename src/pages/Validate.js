@@ -4,13 +4,8 @@ import GlobalStates from "../utilities/GlobalStates";
 import axios from "axios";
 
 const Backend_URl = process.env.REACT_APP_BACKEND_URl;
-const role = sessionStorage.getItem("role");
 
 const Validate = () => {
-  // Token state contains token from URL...same thing as ID
-  const [Token, setToken] = useState(null);
-  const [ID, setID] = useState(null);
-
   //   http://localhost:3000/auth?token=66da3fb5e5bddb8e35d38cadba51500efc869e099fd961887a55285a3a46e52f51e8c13a51d7444eefba038dae916e01a14969be9dbee187dd52745973235aa9&id=610078daf45926fe5e394205484e36aa784ce851e27a6ed25e87dac8083160c3eae88b3c6f8fe6ec604f8953458c2bbbd3bb3dd461156548c662817125417e57kp
   const GlobalContext = useContext(GlobalStates);
   let location = useLocation();
@@ -18,26 +13,21 @@ const Validate = () => {
   let query = new URLSearchParams(location.search);
 
   useEffect(() => {
-    // setToken(query.get("token"));
-    // setID(query.get("id"));
-    console.log("location url", location)
-    console.log("token frontend", query.get("token"))
-    console.log("id frontend", query.get("id"))
-
-
     // POST request to http://localhost:5000/auth with token and id from URL
     axios
-      .post(`https://f-sync-backend.dulanvee.repl.co/auth`, {
+      .post(`${Backend_URl}/auth`, {
         token: query.get("token"),
         id: query.get("id"),
       })
       .then((response) => {
         console.log(response);
-        sessionStorage.setItem("jwt",JSON.stringify(response.data));
-
+        sessionStorage.setItem("jwt", JSON.stringify(response.data));
+        //Future token Verification
         // direct to the required role dashboard
         history.push(
-          role === "retail" ? "/dashboard/retail" : "/dashboard/brand"
+          GlobalContext.role === "retail"
+            ? "/dashboard/retail"
+            : "/dashboard/brand"
         );
         window.location.reload();
       })
@@ -45,12 +35,6 @@ const Validate = () => {
         console.log(error);
       });
   }, []);
-
-  useEffect(() => {
-    //   redirect to dash
-    // history.push(`/dashboard/${GlobalContext.role}`);
-    console.log("User Has been validated");
-  }, [Token, GlobalContext]);
 
   return (
     <div>

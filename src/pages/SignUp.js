@@ -32,7 +32,7 @@ const SignUp = () => {
     onOpen();
 
     axios
-      .post(`https://f-sync-backend.dulanvee.repl.co/signup`, {
+      .post(`${Backend_URl}/signup`, {
         email: companyEmail,
         name: companyName,
         phoneNumber: phoneNumber,

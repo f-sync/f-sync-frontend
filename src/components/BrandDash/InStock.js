@@ -21,8 +21,10 @@ import GlobalStates from "../../utilities/GlobalStates"
 const InStock = (props) => {
   const { inventory } = useContext(SocketContext);
   const [currentInventory, setCurrentInventory] = useState([]);
+  console.log("Inventory stuff",inventory);
 
   useEffect(() => {
+
     // Payload:
     // retailID: email of retailer
     // brandID: email of brand
@@ -42,25 +44,6 @@ const InStock = (props) => {
   }, [props.tabIndex]);
 
   useEffect(() => {
-    console.log("props")
-    // Payload:
-    // retailID: email of retailer
-    // brandID: email of brand
-    // type: "retail" or "brand"
-
-    // Ask the backend for the current retailer's inventory
-    // MAKE THIS RERUN EVERY TIME YOU GO BACK TO THIS IN STOCK VIEW?
-    let payload = {
-      retailID: props.retailID,
-      brandID: props.brandID,
-      type: props.type,
-    };
-    // Get the inventory of the current retailer
-    GetStock(payload);
-  }, [props.email]);
-
-  useEffect(() => {
-    console.log(inventory);
     setStock(inventory);
   }, [inventory]);
 
