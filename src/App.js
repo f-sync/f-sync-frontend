@@ -42,12 +42,28 @@ const App = () => {
   };
 
   useEffect(() => {
-    setRole(sessionrole);
-    setEmail(sessionemail);
-    console.log("Sessions", sessionrole + "  " + sessionemail);
 
-    verifyToken(sessiontoken);
+    // Get JWT from sessionStorage
+    const JWT = sessionStorage.getItem("jwt").replaceAll("\"", "");
+    // Decode the JWT
+    const decodedJWT = verifyToken(JWT);
+    console.log(decodedJWT)
+
+    // Set email, name, and brand into global provider
+    setRole(decodedJWT.type);
+    setEmail(decodedJWT.email);
+    setUser(decodedJWT.name);
+
+    // setRole(sessionrole);
+    // setEmail(sessionemail);
+    // console.log("Sessions", sessionrole + "  " + sessionemail);
+
+    // verifyToken(sessiontoken);
   }, []);
+
+  useEffect(() => {
+    console.log("State email: ", Email)
+  }, [Email])
 
   return (
     <SocketProvider>

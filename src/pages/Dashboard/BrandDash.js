@@ -1,8 +1,8 @@
 import {
   Box, Heading, HStack, Select, Tab, TabList, TabPanel,
-  TabPanels, Tabs
+  TabPanels, Tabs, useEditable
 } from "@chakra-ui/react";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AddProduct from "../../components/BrandDash/AddProduct";
 import AddRetail from "../../components/BrandDash/AddRetailer";
 import InStock from "../../components/BrandDash/InStock";
@@ -11,6 +11,8 @@ import GlobalStates from "../../utilities/GlobalStates";
 const BrandDash = () => {
   const DashContext = useContext(GlobalStates);
   const [tabIndex, setTabIndex] = useState(0);
+
+  console.log("Dash", DashContext);
 
   return (
     <Box>

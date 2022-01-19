@@ -16,6 +16,7 @@ import { FcFeedback } from "react-icons/fc";
 import { GetStock } from "../../sockets/emits";
 import GenerateFakeInventory from "../../utilities/FakeInventory";
 import SocketContext from "../../utilities/SocketContext";
+import GlobalStates from "../../utilities/GlobalStates"
 
 const InStock = (props) => {
   const { inventory } = useContext(SocketContext);
@@ -39,6 +40,24 @@ const InStock = (props) => {
       GetStock(payload);
     }
   }, [props.tabIndex]);
+
+  useEffect(() => {
+    console.log("props")
+    // Payload:
+    // retailID: email of retailer
+    // brandID: email of brand
+    // type: "retail" or "brand"
+
+    // Ask the backend for the current retailer's inventory
+    // MAKE THIS RERUN EVERY TIME YOU GO BACK TO THIS IN STOCK VIEW?
+    let payload = {
+      retailID: props.retailID,
+      brandID: props.brandID,
+      type: props.type,
+    };
+    // Get the inventory of the current retailer
+    GetStock(payload);
+  }, [props.email]);
 
   useEffect(() => {
     console.log(inventory);
