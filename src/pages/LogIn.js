@@ -22,7 +22,7 @@ const LogIn = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [email, setEmail] = useState("");
-  const [role, setRole] = useState("retail");
+  const [role, setRole] = useState("brand");
 
   useEffect(() => {
     sessionStorage.clear();

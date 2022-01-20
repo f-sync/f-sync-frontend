@@ -39,7 +39,6 @@ const AddProduct = (props) => {
         value={value}
         onChange={(event) => handleChange(event)}
       />{" "}
-      &nbsp;&nbsp;
       <Button
         variant="outline"
         colorScheme="black"

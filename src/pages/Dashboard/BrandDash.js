@@ -18,7 +18,7 @@ const BrandDash = () => {
     <Box>
       <HStack pt="2%" justify="space-around">
         <Heading textTransform="uppercase">
-          {DashContext.brandName}'s Global Inventory
+          {DashContext.user}'s Global Inventory
         </Heading>
         <Select placeholder="Choose Retailer" variant="filled" width="30%">
           <option value="option1">VIEW ALL</option>
@@ -45,7 +45,7 @@ const BrandDash = () => {
             <InStock
               retailID={DashContext.email}
               brandID={DashContext.email}
-              type="brand"
+              type={DashContext.role}
               tabIndex={tabIndex}
             />
           </TabPanel>
@@ -53,7 +53,7 @@ const BrandDash = () => {
             <AddProduct
               retailID={DashContext.email}
               type={DashContext.role}
-              brandID={DashContext.brandEmail}
+              brandID={DashContext.email}
               tabIndex={tabIndex}
             />
           </TabPanel>
@@ -61,7 +61,7 @@ const BrandDash = () => {
             <AddRetail
               retailID={DashContext.email}
               type={DashContext.role}
-              brandID={DashContext.brandEmail}
+              brandID={DashContext.email}
               tabIndex={tabIndex}
             />
           </TabPanel>
