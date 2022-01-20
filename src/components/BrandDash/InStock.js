@@ -1,25 +1,30 @@
 import {
-  Button, Editable,
+  Button,
+  Editable,
   EditableInput,
-  EditablePreview, Flex,
+  EditablePreview,
+  Flex,
   Table,
   Tbody,
   Td,
   Th,
   Thead,
-  Tr
+  Tr,
 } from "@chakra-ui/react";
 import React, { useContext, useEffect, useState } from "react";
 import { FcFeedback } from "react-icons/fc";
 import { GetStock } from "../../sockets/emits";
 import GenerateFakeInventory from "../../utilities/FakeInventory";
 import SocketContext from "../../utilities/SocketContext";
+import GlobalStates from "../../utilities/GlobalStates"
 
 const InStock = (props) => {
   const { inventory } = useContext(SocketContext);
   const [currentInventory, setCurrentInventory] = useState([]);
+  console.log("Inventory stuff",inventory);
 
   useEffect(() => {
+
     // Payload:
     // retailID: email of retailer
     // brandID: email of brand
@@ -39,15 +44,18 @@ const InStock = (props) => {
   }, [props.tabIndex]);
 
   useEffect(() => {
-    console.log(inventory);
     setStock(inventory);
   }, [inventory]);
 
-  function setStock(inventory) {
+  const handleRequest = () => {
+    console.log("Request Made");
+  };
+
+  const setStock = (inventory) => {
     let fakeInventory = GenerateFakeInventory(inventory, false);
     setCurrentInventory(fakeInventory);
     // console.log(currentInventory)
-  }
+  };
 
   const header = [
     "Item Name",
@@ -201,6 +209,7 @@ const InStock = (props) => {
                     size="sm"
                     spacing={3}
                     leftIcon={<FcFeedback />}
+                    onClick={() => handleRequest()}
                   >
                     Request
                   </Button>

@@ -1,13 +1,18 @@
-import InStock from "../components/BrandDash/InStock";
-import AddProduct from "../components/BrandDash/AddProduct";
-import AddRetail from "../components/BrandDash/AddRetailer";
-import { Box, HStack, Heading, Select, Tabs, TabList, Tab, TabPanel, TabPanels } from "@chakra-ui/react";
+import {
+  Box, Heading, HStack, Select, Tab, TabList, TabPanel,
+  TabPanels, Tabs, useEditable
+} from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";
-import GlobalStates from "../utilities/GlobalStates";
+import AddProduct from "../../components/BrandDash/AddProduct";
+import AddRetail from "../../components/BrandDash/AddRetailer";
+import InStock from "../../components/BrandDash/InStock";
+import GlobalStates from "../../utilities/GlobalStates";
 
 const BrandDash = () => {
   const DashContext = useContext(GlobalStates);
-  const [tabIndex, setTabIndex] = useState(0)
+  const [tabIndex, setTabIndex] = useState(0);
+
+  console.log("Dash", DashContext);
 
   return (
     <Box>
@@ -37,17 +42,31 @@ const BrandDash = () => {
 
         <TabPanels>
           <TabPanel>
-            <InStock retailID = {DashContext.email} brandID = {DashContext.email} type = "brand" tabIndex = {tabIndex}/>
+            <InStock
+              retailID={DashContext.email}
+              brandID={DashContext.email}
+              type="brand"
+              tabIndex={tabIndex}
+            />
           </TabPanel>
           <TabPanel>
-            <AddProduct retailID = {DashContext.email} type = {DashContext.role} brandID = {DashContext.brandEmail} tabIndex = {tabIndex}/>
+            <AddProduct
+              retailID={DashContext.email}
+              type={DashContext.role}
+              brandID={DashContext.brandEmail}
+              tabIndex={tabIndex}
+            />
           </TabPanel>
           <TabPanel>
-            <AddRetail retailID = {DashContext.email} type = {DashContext.role} brandID = {DashContext.brandEmail} tabIndex = {tabIndex}/>
+            <AddRetail
+              retailID={DashContext.email}
+              type={DashContext.role}
+              brandID={DashContext.brandEmail}
+              tabIndex={tabIndex}
+            />
           </TabPanel>
         </TabPanels>
       </Tabs>
-      
     </Box>
   );
 };

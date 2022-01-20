@@ -2,8 +2,14 @@ import { socketEvents } from "./events";
 import io from "socket.io-client";
 import { TestEmission } from "./emits";
 
-const ENDPOINT = "http://localhost:5000";
-export const socket = io(ENDPOINT);
+const JWT = JSON.parse(sessionStorage.getItem("jwt"));
+
+const ENDPOINT = process.env.REACT_APP_BACKEND_URl;
+export const socket = io(ENDPOINT, {
+  auth: {
+    token: JWT,
+  },
+});
 
 const initSockets = ({ setValue }) => {
   socketEvents({ setValue });

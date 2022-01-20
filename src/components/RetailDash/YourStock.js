@@ -13,50 +13,54 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { IoIosRedo } from "react-icons/io";
-import { useContext, useEffect, useState } from 'react'
-import {GetStock, ModifyQuantity} from '../../sockets/emits'
-import SocketContext from '../../utilities/SocketContext'
+import { useContext, useEffect, useState } from "react";
+import { GetStock, ModifyQuantity } from "../../sockets/emits";
+import SocketContext from "../../utilities/SocketContext";
 import GenerateFakeInventory from "../../utilities/FakeInventory";
 
 const YourStock = (props) => {
   const { inventory } = useContext(SocketContext);
-  const [currentInventory, setCurrentInventory] = useState([])
+  const [currentInventory, setCurrentInventory] = useState([]);
 
   // TODO: When the quantity changes, emit the new quantity: ModifyQuantity
-      // Payload object:
-        // productID : id of product to modify
-        // brandID : email of brand
-        // email: retailer email
-        // newQuantity: new quantity
+  // Payload object:
+  // productID : id of product to modify
+  // brandID : email of brand
+  // email: retailer email
+  // newQuantity: new quantity
 
   useEffect(() => {
-      // Payload:
-      // retailID: email of retailer
-      // brandID: email of brand
-      // type: "retail" or "brand"
-      
-      // Ask the backend for the current retailer's inventory
-      if (props.tabIndex === 0) {
-        let payload = {
-          retailID: props.retailID,
-          brandID: props.brandID,
-          type: props.type
-        }
-        // Get the inventory of the current retailer
-        GetStock(payload);
-      }
-  },[props.tabIndex])
+    // Payload:
+    // retailID: email of retailer
+    // brandID: email of brand
+    // type: "retail" or "brand"
+
+    // Ask the backend for the current retailer's inventory
+    if (props.tabIndex === 0) {
+      let payload = {
+        retailID: props.retailID,
+        brandID: props.brandID,
+        type: props.type,
+      };
+      // Get the inventory of the current retailer
+      GetStock(payload);
+    }
+  }, [props.tabIndex]);
 
   useEffect(() => {
     // console.log(inventory)
     setStock(inventory);
-  },[inventory])
+  }, [inventory]);
 
-  function setStock(inventory) {
+  const handleReturn = () => {
+    console.log("Make Return");
+  };
+
+  const setStock = (inventory) => {
     let fakeInventory = GenerateFakeInventory(inventory, true);
     setCurrentInventory(fakeInventory);
     // console.log(currentInventory)
-  }
+  };
 
   const header = [
     "Item Name",
@@ -156,64 +160,64 @@ const YourStock = (props) => {
                 }}
               >
                 {Object.keys(token).map((x) => {
-                return x === "quantity" ? (
-                  // Units Available should be changeable from the frontend
-                  <React.Fragment key={`${tid}${x}`}>
-                    <Td
-                      display={{
-                        base: "table-cell",
-                        md: "none",
-                      }}
-                      sx={{
-                        "@media print": {
-                          display: "none",
-                        },
-                        textTransform: "uppercase",
-                        color: "black",
-                        fontSize: "xs",
-                        fontWeight: "bold",
-                        letterSpacing: "wider",
-                        fontFamily: "heading",
-                      }}
-                    >
-                      {console.log("🧕🧕", x)}
-                      {x}
-                    </Td>
-                    <Td color="black" fontSize="md" fontWeight="hairline">
-                      <Editable defaultValue="--Enter Available Units--">
-                        <EditablePreview />
-                        <EditableInput />
-                      </Editable>
-                    </Td>
-                  </React.Fragment>
-                ) : (
-                  <React.Fragment key={`${tid}${x}`}>
-                    <Td
-                      display={{
-                        base: "table-cell",
-                        md: "none",
-                      }}
-                      sx={{
-                        "@media print": {
-                          display: "none",
-                        },
-                        textTransform: "uppercase",
-                        color: "black",
-                        fontSize: "xs",
-                        fontWeight: "bold",
-                        letterSpacing: "wider",
-                        fontFamily: "heading",
-                      }}
-                    >
-                      {console.log("🤩", token)}
+                  return x === "quantity" ? (
+                    // Units Available should be changeable from the frontend
+                    <React.Fragment key={`${tid}${x}`}>
+                      <Td
+                        display={{
+                          base: "table-cell",
+                          md: "none",
+                        }}
+                        sx={{
+                          "@media print": {
+                            display: "none",
+                          },
+                          textTransform: "uppercase",
+                          color: "black",
+                          fontSize: "xs",
+                          fontWeight: "bold",
+                          letterSpacing: "wider",
+                          fontFamily: "heading",
+                        }}
+                      >
+                        {console.log("🧕🧕", x)}
+                        {x}
+                      </Td>
+                      <Td color="black" fontSize="md" fontWeight="hairline">
+                        <Editable defaultValue="--Enter Available Units--">
+                          <EditablePreview />
+                          <EditableInput />
+                        </Editable>
+                      </Td>
+                    </React.Fragment>
+                  ) : (
+                    <React.Fragment key={`${tid}${x}`}>
+                      <Td
+                        display={{
+                          base: "table-cell",
+                          md: "none",
+                        }}
+                        sx={{
+                          "@media print": {
+                            display: "none",
+                          },
+                          textTransform: "uppercase",
+                          color: "black",
+                          fontSize: "xs",
+                          fontWeight: "bold",
+                          letterSpacing: "wider",
+                          fontFamily: "heading",
+                        }}
+                      >
+                        {console.log("🤩", token)}
 
-                      {x}
-                    </Td>
-                    <Td color="black" fontSize="md" fontWeight="hairline">
-                      {token[x]}
-                    </Td>
-                  </React.Fragment>
-                );
+                        {x}
+                      </Td>
+                      <Td color="black" fontSize="md" fontWeight="hairline">
+                        {token[x]}
+                      </Td>
+                    </React.Fragment>
+                  );
                 })}
                 <Td
                   display={{
@@ -242,6 +246,7 @@ const YourStock = (props) => {
                     size="sm"
                     spacing={3}
                     leftIcon={<IoIosRedo />}
+                    onClick={() => handleReturn()}
                   >
                     Return
                   </Button>
