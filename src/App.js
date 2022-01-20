@@ -13,7 +13,7 @@ import GlobalStates from "./utilities/GlobalStates";
 import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
 import Validate from "./pages/Validate";
-// import NewHome from "./pages/newHome";
+import NewHome from "./pages/newHome";
 import NotFound from "./pages/NotFound";
 import jwt from "jsonwebtoken";
 import DataTable from "./components/table";
@@ -21,15 +21,11 @@ import DataTable from "./components/table";
 const Success_key = process.env.REACT_APP_JWT_SECRET_KEY;
 
 const App = () => {
-  const [User, setUser] = useState("Sony");
-  const [Role, setRole] = useState("retail"); //strictly "retail" or "brand"
-  const [Email, setEmail] = useState("");
+  const [User, setUser] = useState("User");
+  const [Role, setRole] = useState("role"); //strictly "retail" or "brand"
+  const [Email, setEmail] = useState("email@gmail.com");
   const [BrandEmail, setBrandEmail] = useState("sonylomoBrand@gmail.com");
   const [BrandName, setBrandName] = useState("SonyBrand");
-
-  const sessionrole = sessionStorage.key(0);
-  const sessionemail = sessionStorage[sessionrole];
-  const sessiontoken = sessionStorage.key(2);
 
   const verifyToken = (jwtToken) => {
     try {
@@ -81,8 +77,6 @@ const App = () => {
         <ChakraProvider>
           <Router>
             <Navbar />
-
-            {/* All Routes go here 👇 */}
             <Switch>
               <Route path="/About" component={About} />
               <Route exact path="/" component={Home} />

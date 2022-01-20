@@ -1,4 +1,3 @@
-// import { socket } from "../App" // Possibly fix this import later, check events.js also
 import { socket } from "../sockets/initSockets";
 
 export const socketEvents = ({ setValue }) => {
