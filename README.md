@@ -1,9 +1,10 @@
 # F•sync 🚀
 
 View our demo on [Devpost](https://devpost.com/software/f-sync)!
+
 And the live deployed site: [f-sync.vercel.app](https://f-sync.vercel.app/)
 
-Backend deployed: (https://f-sync-backend.dulanvee.repl.co)[https://f-sync-backend.dulanvee.repl.co]
+Backend deployed: [f-sync-backend.dulanvee.repl.com](https://f-sync-backend.dulanvee.repl.com)
 
 ## Inspiration ✨
 Fashion has a waste problem. The fashion industry is responsible for 10% of annual global carbon emissions. The problem of excess product is endemic in the garment industry, now costing the US retail industry as much as $50 billion a year. It has led to constant discounting, dumping of unsold clothes to lower-income countries and in the worst case, stock destruction i.e. burning of perfectly wearable clothes.
