@@ -39,7 +39,7 @@ const LogIn = () => {
         type: role,
       })
       .then((response) => {
-        console.log("Login res",response);
+        console.log("Login res", response);
         // {user: 'NeoBrands', role: 'brand', email: 'sonylomo2@gmail.com', brandEmail: 'sonylomoBrand@gmail.com', brandName: 'SonyBrand'}
       })
       .catch((error) => {
@@ -79,7 +79,21 @@ const LogIn = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
         </FormControl>
-       
+        <RadioGroup
+          onChange={(val) => setRole(val)}
+          value={role}
+          isRequired={true}
+        >
+          <Stack direction="row" spacing={6}>
+            <Radio value="brand" colorScheme="blackAlpha">
+              I am a Brand
+            </Radio>
+            <Radio value="retail" colorScheme="blackAlpha">
+              I am a Retailer
+            </Radio>
+          </Stack>
+        </RadioGroup>
+
         <Stack spacing={6}>
           <Button
             bg={"black"}

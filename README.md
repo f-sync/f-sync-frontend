@@ -1,6 +1,9 @@
-# F•sync
+# F•sync 🚀
 
 View our demo on [Devpost](https://devpost.com/software/f-sync)!
+And the live deployed site: [f-sync.vercel.app](https://f-sync.vercel.app/)
+
+Backend deployed: (https://f-sync-backend.dulanvee.repl.co)[https://f-sync-backend.dulanvee.repl.co]
 
 ## Inspiration ✨
 Fashion has a waste problem. The fashion industry is responsible for 10% of annual global carbon emissions. The problem of excess product is endemic in the garment industry, now costing the US retail industry as much as $50 billion a year. It has led to constant discounting, dumping of unsold clothes to lower-income countries and in the worst case, stock destruction i.e. burning of perfectly wearable clothes.
@@ -18,7 +21,7 @@ A retailer can make a request to another retailer for any items they need with j
 
 Brands can add retailers to have their inventory be tracked in their global inventory, as well as add new lines of products to their inventory which retailers can see and request. They can likewise request products from other retailers.
 
-## How we built it 🚀
+## How we built it 🤓
 F•sync is divided into two parts: the client frontend and the server backend. 
 
 We used Express for our backend webserver, and “Socket.io” to communicate between the frontend and the backend, and “MongoDB” for our database. We also incorporated the Twilio API (SendGrid) to send emails personalized through dynamic templates to the various companies that would use our product. For MongoDB, we are using two collections: one for brands and one for retailers. Each brand has basic information, a list of products with their global quantity and name, and a list of associated retailers. Likewise, retailers have basic information, but also have a list of brands they carry and a list of products in that specific brand they carry. This enabled us to minimize having the same information repeated and make it easy to look up any information about any brand or retailer, such as their inventory.

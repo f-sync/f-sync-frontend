@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import About from "./pages/About";
 import BrandDash from "./pages/Dashboard/BrandDash";
-import Home from "./pages/Home";
 import RetailDash from "./pages/Dashboard/RetailDash";
 import SocketProvider from "./sockets/SocketProvider";
 // import BrandRoutes from "./utilities/BrandRoutes";
@@ -17,15 +16,16 @@ import NewHome from "./pages/newHome";
 import NotFound from "./pages/NotFound";
 import jwt from "jsonwebtoken";
 import DataTable from "./components/table";
+import PrivateRoute from "./utilities/PrivateRoute";
 
 const Success_key = process.env.REACT_APP_JWT_SECRET_KEY;
 
 const App = () => {
-  const [User, setUser] = useState("User");
-  const [Role, setRole] = useState("role"); //strictly "retail" or "brand"
-  const [Email, setEmail] = useState("email@gmail.com");
-  const [BrandEmail, setBrandEmail] = useState("sonylomoBrand@gmail.com");
-  const [BrandName, setBrandName] = useState("SonyBrand");
+  const [User, setUser] = useState("");
+  const [Role, setRole] = useState(""); //strictly "retail" or "brand"
+  const [Email, setEmail] = useState("");
+  const [BrandEmail, setBrandEmail] = useState("");
+  const [BrandName, setBrandName] = useState("");
 
   const verifyToken = (jwtToken) => {
     try {
@@ -38,30 +38,23 @@ const App = () => {
   };
 
   useEffect(() => {
-
     // Get JWT from sessionStorage
-    const JWT = JSON.parse(sessionStorage.getItem("jwt"))
-    console.log("jwt", JWT)
+    const JWT = JSON.parse(sessionStorage.getItem("jwt"));
+    console.log("jwt", JWT);
     // Decode the JWT
     const decodedJWT = verifyToken(JWT);
 
-    console.log(decodedJWT)
+    console.log(decodedJWT);
 
     // Set email, name, and brand into global provider
     setRole(decodedJWT.type);
     setEmail(decodedJWT.email);
     setUser(decodedJWT.name);
-
-    // setRole(sessionrole);
-    // setEmail(sessionemail);
-    // console.log("Sessions", sessionrole + "  " + sessionemail);
-
-    // verifyToken(sessiontoken);
   }, []);
 
   useEffect(() => {
-    console.log("State email: ", Email)
-  }, [Email])
+    console.log("State email: ", Email);
+  }, [Email]);
 
   return (
     <SocketProvider>
@@ -79,23 +72,14 @@ const App = () => {
             <Navbar />
             <Switch>
               <Route path="/About" component={About} />
-              <Route exact path="/" component={Home} />
+              <Route exact path="/" component={NewHome} />
               <Route exact path="/SignUp" component={SignUp} />
               <Route exact path="/LogIn" component={LogIn} />
-              <Route path="/dashboard/retail" component={RetailDash} />
-              <Route path="/dashboard/brand" component={BrandDash} />
-              <Route path="/table" component={DataTable} />
               <Route path="/auth" component={Validate} />
+              <PrivateRoute path="/dashboard/retail" Comp={RetailDash} />
+              <PrivateRoute path="/dashboard/brand" Comp={BrandDash} />
+              <PrivateRoute path="/table" Comp={DataTable} />
               <Route exact path="*" component={NotFound} />
-
-
-              {/* <RetailRoutes
-                role={Role}
-                comp={RetailDash}
-                
-                 exact path="/retaildash"
-              />
-              <BrandRoutes role={Role} comp={BrandDash}  exact path="/branddash" /> */}
             </Switch>
           </Router>
         </ChakraProvider>
