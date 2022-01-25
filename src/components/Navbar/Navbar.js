@@ -18,9 +18,10 @@ import {
 } from "@chakra-ui/react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
-import GlobalStates from "../utilities/GlobalStates";
+import GlobalStates from "../../utilities/GlobalStates";
 import { useContext } from "react";
-import WhiteLogo from "../assets/Fsync_white.png";
+import WhiteLogo from "../../assets/Fsync_white.png";
+import auth from "../../utilities/Auth"
 
 const NavLink = ({ children, link }) => (
   <Link
@@ -47,7 +48,9 @@ const Links = ({ role }) => {
         Dashboard
       </NavLink>
       <NavLink link="/About">About</NavLink>
-      <NavLink link="/LogIn">Log In</NavLink>
+      <NavLink link="/LogIn" onClick={() => auth.signout()}>
+        Log Out
+      </NavLink>
     </>
   );
 };

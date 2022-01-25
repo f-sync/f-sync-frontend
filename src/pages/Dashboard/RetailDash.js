@@ -23,6 +23,7 @@ import {
   GetValidRetail,
 } from "../../sockets/emits";
 import SocketContext from "../../utilities/SocketContext";
+import Navbar from "../../components/Navbar/Navbar";
 
 const RetailDash = () => {
   const DashContext = useContext(GlobalStates);
@@ -42,76 +43,81 @@ const RetailDash = () => {
   // type: "retail" or "brand"
 
   return (
-    <Box>
-      <HStack pt="2%" justify="space-around">
-        <Heading textTransform="uppercase">{BrandDisplay}'s Portfolio</Heading>
-        <Select
-          placeholder="Choose Brand"
-          variant="filled"
-          width="30%"
-          onChange={(e) => setBrandDisplay(e.target.value)}
+    <>
+      <Navbar />
+      <Box>
+        <HStack pt="2%" justify="space-around">
+          <Heading textTransform="uppercase">
+            {BrandDisplay}'s Portfolio
+          </Heading>
+          <Select
+            placeholder="Choose Brand"
+            variant="filled"
+            width="30%"
+            onChange={(e) => setBrandDisplay(e.target.value)}
+          >
+            {retailerBrandslist.map((brand, index) => {
+              return (
+                <option value={brand.name} key={index}>
+                  {brand.name}
+                </option>
+                // TODO: On select to trigger swapping brands
+              );
+            })}
+          </Select>
+        </HStack>
+        <Tabs
+          variant="soft-rounded"
+          colorScheme="blackAlpha"
+          align="center"
+          size="lg"
+          pt="2%"
+          onChange={(index) => setTabIndex(index)}
         >
-          {retailerBrandslist.map((brand, index) => {
-            return (
-              <option value={brand.name} key={index}>
-                {brand.name}
-              </option>
-              // TODO: On select to trigger swapping brands
-            );
-          })}
-        </Select>
-      </HStack>
-      <Tabs
-        variant="soft-rounded"
-        colorScheme="blackAlpha"
-        align="center"
-        size="lg"
-        pt="2%"
-        onChange={(index) => setTabIndex(index)}
-      >
-        <TabList>
-          <Tab>YOUR STOCK</Tab>
-          <Tab>IN STOCK</Tab>
-          <Tab>MADE TO ORDER</Tab>
-          <Tab>ADD PRODUCT</Tab>
-        </TabList>
+          <TabList>
+            <Tab>YOUR STOCK</Tab>
+            <Tab>IN STOCK</Tab>
+            <Tab>MADE TO ORDER</Tab>
+            <Tab>ADD PRODUCT</Tab>
+          </TabList>
 
-        <TabPanels>
-          <TabPanel>
-            <YourStock
-              retailID={DashContext.email}
-              type={DashContext.role}
-              brandID={DashContext.brandEmail}
-              tabIndex={tabIndex}
-            />
-          </TabPanel>
-          <TabPanel>
-            <InStock
-              retailID={DashContext.email}
-              type={"brand"}
-              brandID={DashContext.brandEmail}
-              tabIndex={tabIndex}
-            />
-          </TabPanel>
-          <TabPanel>
-            <ToOrder
-              retailID={DashContext.email}
-              type={"brand"}
-              brandID={DashContext.brandEmail}
-              tabIndex={tabIndex}
-            />
-          </TabPanel>
-          <TabPanel>
-            <AddProduct
-              retailID={DashContext.email}
-              type={DashContext.role}
-              brandID={DashContext.brandEmail}
-              tabIndex={tabIndex}
-            />
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
-    </Box>
+          <TabPanels>
+            <TabPanel>
+              <YourStock
+                retailID={DashContext.email}
+                type={DashContext.role}
+                brandID={DashContext.brandEmail}
+                tabIndex={tabIndex}
+              />
+            </TabPanel>
+            <TabPanel>
+              <InStock
+                retailID={DashContext.email}
+                type={"brand"}
+                brandID={DashContext.brandEmail}
+                tabIndex={tabIndex}
+              />
+            </TabPanel>
+            <TabPanel>
+              <ToOrder
+                retailID={DashContext.email}
+                type={"brand"}
+                brandID={DashContext.brandEmail}
+                tabIndex={tabIndex}
+              />
+            </TabPanel>
+            <TabPanel>
+              <AddProduct
+                retailID={DashContext.email}
+                type={DashContext.role}
+                brandID={DashContext.brandEmail}
+                tabIndex={tabIndex}
+              />
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+      </Box>
+    </>
   );
 };
 

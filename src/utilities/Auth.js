@@ -15,7 +15,7 @@ const auth = {
         }
         cb()
     },
-    signout(cb) {
+    signout() {
         if (typeof window !== undefined) {
             sessionStorage.removeItem('jwt');
         }

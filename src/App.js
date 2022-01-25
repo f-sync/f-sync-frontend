@@ -1,7 +1,6 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Navbar from "./components/Navbar";
 import About from "./pages/About";
 import BrandDash from "./pages/Dashboard/BrandDash";
 import RetailDash from "./pages/Dashboard/RetailDash";
@@ -44,17 +43,13 @@ const App = () => {
     // Decode the JWT
     const decodedJWT = verifyToken(JWT);
 
-    console.log(decodedJWT);
-
     // Set email, name, and brand into global provider
     setRole(decodedJWT.type);
     setEmail(decodedJWT.email);
     setUser(decodedJWT.name);
   }, []);
 
-  useEffect(() => {
-    console.log("State email: ", Email);
-  }, [Email]);
+  // console.log("State email: ", Email);
 
   return (
     <SocketProvider>
@@ -69,7 +64,6 @@ const App = () => {
       >
         <ChakraProvider>
           <Router>
-            <Navbar />
             <Switch>
               <Route path="/About" component={About} />
               <Route exact path="/" component={NewHome} />
